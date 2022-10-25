@@ -18,6 +18,7 @@
     "twitter-api-sdk": "^1.2.1"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.10.0",
     "cypress": "^10.10.0"
   }
 }

@@ -10,6 +10,11 @@ app.use(express.json());
 
 app.use('/api/search', require('./api/routes/search.js'));
 
+/* istanbul ignore next */
+if (global.__coverage__) {
+  require('@cypress/code-coverage/middleware/express')(app)
+}
+
 app.listen(port, () => {
 	console.log(`http://localhost:${port}/`);
 });

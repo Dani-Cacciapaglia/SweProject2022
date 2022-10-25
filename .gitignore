@@ -1,5 +1,7 @@
 node_modules/
+coverage/
 cypress/screenshots/
 cypress/videos/
+.nyc_output/
 yarn.lock
 *.swp
