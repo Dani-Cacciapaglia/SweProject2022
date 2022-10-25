@@ -32,4 +32,4 @@ sonarqube-check:
   only:
     - main
   dependencies:
-    - build_job
+    - cypress
