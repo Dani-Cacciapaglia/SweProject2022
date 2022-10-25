@@ -12,7 +12,7 @@ module.exports = defineConfig({
   env: {
     'codeCoverage': {
       'url': 'http://localhost:8000/__coverage__',
-      'expectBackendCoverageOnly': true,
+      'expectBackendCoverageOnly': true, //! da togliere quando e' pronto il front
     }
   },
 });

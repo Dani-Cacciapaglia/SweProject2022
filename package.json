@@ -2,19 +2,29 @@
   "name": "twitter",
   "version": "1.0.0",
   "main": "index.js",
+  "author": "Andrea Bianchi, Daniele Cacciapaglia, Luca Bassi, Luca Orlandello, Simone Bortolai",
+  "keywords": [
+    "gatsby"
+  ],
   "scripts": {
-    "test": "npx cypress run"
+    "test": "npx cypress run",
+    "dev": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
   },
   "repository": {
     "type": "git",
     "url": "git@git.hjkl.gq:team8/twitter.git"
   },
-  "author": "",
   "license": "AGPL-3.0-or-later",
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "gatsby": "^4.24.5",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "twitter-api-sdk": "^1.2.1"
   },
   "devDependencies": {
