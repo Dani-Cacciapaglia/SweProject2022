@@ -8,7 +8,7 @@ cypress:
   script:
     - npm ci
     - npx nyc node index.js &
-    - npx cypress run --browser firefox
+    - npx cypress run --browser firefox --config video=false
   artifacts:
     paths:
       - coverage/

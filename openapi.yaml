@@ -45,6 +45,8 @@ components:
           type: string
         username:
           type: string
+        profile_image_url:
+          type: string
     Tweet:
       type: object
       properties:
