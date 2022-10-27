@@ -6,3 +6,4 @@ cypress/videos/
 .nyc_output/
 yarn.lock
 *.swp
+public/
