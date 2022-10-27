@@ -3,10 +3,10 @@ const router = express.Router();
 
 router.get('/:query', async (req, res) => {
 	try {
-		const tweetsData = await twitterClient.tweets.tweetsRecentSearch({'query': req.params.query, 'expansions': 'author_id'});
+		const tweetsData = await twitterClient.tweets.tweetsRecentSearch({'query': req.params.query, 'expansions': 'author_id', 'user.fields': 'profile_image_url'});
 		let users = new Map();
 		tweetsData.includes.users.forEach((user) => {
-			users.set(user.id, {'name': user.name, 'username': user.username});
+			users.set(user.id, {'name': user.name, 'username': user.username, 'profile_image_url': user.profile_image_url});
 		});
 		let tweets = [];
 		tweetsData.data.forEach((tweet) => {
