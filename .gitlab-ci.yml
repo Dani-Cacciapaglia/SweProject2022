@@ -7,6 +7,7 @@ cypress:
   stage: test
   script:
     - npm ci
+    - npm run build
     - npx nyc node index.js &
     - npx cypress run --browser firefox
   artifacts:
