@@ -15,8 +15,14 @@ const fakeData = {
 
 const TweetCard = () => {
   return (
-    <div>
+    <div card={style.border= "thin solid #000000"}>
       
+      <p style="text-align:left">
+      <img src="twitter-logo.jpg" alt="propic"/>
+        ${fakeData.author.name}\n${fakeData.author.username}\n${fakeData.author.username}
+      
+      </p>
+
     </div>
   )
 }
