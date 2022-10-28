@@ -1,0 +1,17 @@
+.container {
+  margin: 0.5rem auto;
+  width: 90%;
+  max-width: 600px;
+  min-width: 200px;
+}
+
+.searchField {
+  font-size: 1.2rem;
+  font-weight: 400;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 50px;
+  padding: 0.4rem 1.2rem;
+  transition: 0.3s ease-in-out;
+  box-sizing: border-box;
+}
