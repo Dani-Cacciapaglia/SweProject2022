@@ -4,10 +4,9 @@
   font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: center;
-  width: 50%;
-  min-width: 400px;
+  width: 80%;
+  min-width: 300px;
   border-bottom: 1px solid black;
-
   margin: 1rem auto;
 }
 
