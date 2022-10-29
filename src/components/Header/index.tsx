@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import * as style from './Header.module.css';
 
@@ -12,7 +12,7 @@ const Header = () => {
         <h1>Tweets and sweets</h1>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
