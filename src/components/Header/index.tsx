@@ -4,7 +4,7 @@ import * as style from './Header.module.css';
 
 import Logo from '../../assets/twitter-logo.jpg';
 
-export const Header = () => {
+const Header = () => {
   return (
     <header className={style.header}>
       <div className={style.logo}>
@@ -14,3 +14,5 @@ export const Header = () => {
     </header>
   )
 }
+
+export default Header
