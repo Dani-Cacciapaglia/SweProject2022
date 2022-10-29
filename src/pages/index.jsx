@@ -4,6 +4,7 @@ import * as style from './index.module.css';
 
 import Header from '../components/Header';
 import Search from '../components/Search';
+import TweetFeed from '../components/TweetFeed';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 
@@ -12,6 +13,7 @@ const IndexPage = () => {
     <main className={style.main}>
       <Header />
       <Search placeholderText="Cerca tweet..." />
+      <TweetFeed />
     </main>
   );
 };
