@@ -1,0 +1,18 @@
+.wrapper {
+  border: 1px solid #000000;
+  border-radius: 1rem;
+  max-width: 400px;
+}
+
+.profileWrapper {
+}
+
+.profilePicture {
+  width: 48px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.tweetText {
+  text-align: left;
+}
