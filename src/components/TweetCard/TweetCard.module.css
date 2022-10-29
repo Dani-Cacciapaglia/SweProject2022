@@ -20,6 +20,20 @@
   border-radius: 50%;
 }
 
+.profileText {
+  font-family: 'Inter', 'sans-serif';
+  font-size: 1.1rem;
+}
+
+.profileName {
+  font-weight: 600;
+}
+
+.contentWrapper {
+  margin-left: 1rem;
+  font-family: 'Inter', 'sans-serif';
+}
+
 .tweetText {
   text-align: left;
 }
