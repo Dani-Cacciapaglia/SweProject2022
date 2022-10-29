@@ -23,12 +23,13 @@ const TweetCard = () => {
           src={Logo}
           alt="immagine profilo"
         />
-        <p>
-          {fakeData.author.name}
+        <p className={style.profileText}>
+          <span className={style.profileName}>{fakeData.author.name}</span>
+          {` `}
           {fakeData.author.username}
         </p>
       </div>
-      {fakeData.text}
+      <div className={style.contentWrapper}>{fakeData.text}</div>
     </div>
   );
 };
