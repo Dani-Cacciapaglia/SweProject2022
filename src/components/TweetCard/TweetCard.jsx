@@ -19,8 +19,8 @@ const TweetCard = () => {
       
       <p style="text-align:left">
       <img src="twitter-logo.jpg" alt="propic"/>
-        ${fakeData.author.name}\n${fakeData.author.username}\n${fakeData.author.username}
-      
+        ${fakeData.author.name}\n${fakeData.author.username}\n${fakeData.text}
+
       </p>
 
     </div>
