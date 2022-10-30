@@ -6,7 +6,7 @@ import Logo from '../../assets/twitter-logo.jpg';
 
 const Header = () => {
   return (
-    <header className={style.header}>
+    <header>
       <div className={style.logo}>
         <img src={Logo} alt="Twitter Logo" className={style.imgLogo} />
         <h1>Tweets and sweets</h1>
