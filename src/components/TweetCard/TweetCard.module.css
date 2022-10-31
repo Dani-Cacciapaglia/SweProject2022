@@ -13,6 +13,7 @@
   display: flex;
   align-items: start;
   gap: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 .profilePicture {
@@ -24,6 +25,8 @@
 .profileText {
   font-family: 'Inter', 'sans-serif';
   font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .profileName {

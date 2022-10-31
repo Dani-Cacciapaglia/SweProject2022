@@ -21,11 +21,10 @@ const TweetCard = ({ tweetData }) => {
           src={tweetData.author.profile_image_url}
           alt="immagine profilo"
         />
-        <p className={style.profileText}>
+        <div className={style.profileText}>
           <span className={style.profileName}>{tweetData.author.name}</span>
-          {` `}
-          {tweetData.author.username}
-        </p>
+          <span>@{tweetData.author.username}</span>
+        </div>
       </div>
       <div className={style.contentWrapper}>{tweetData.text}</div>
       <div className={style.dateWrapper}>{date}</div>
