@@ -1,27 +1,17 @@
-import React, { useState, useContext } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
 import * as style from './Search.module.css';
 
-import { SearchContext } from '../../hooks/SearchContext';
-
-const baseUrl = 'http://localhost:8000/api/search/';
-
-const Search = ({ placeholderText = 'Search' }) => {
+const Search = ({
+  placeholderText = 'Search',
+  submitText = 'Search',
+  searchHandler,
+}) => {
   const [userInput, setUserInput] = useState('');
-  const { setResult } = useContext(SearchContext);
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     e.preventDefault();
     setUserInput(e.target.value);
-
-    const res = await axios.get(baseUrl, {
-      params: {
-        query: userInput,
-      },
-    });
-
-    setResult(res);
   };
 
   return (
@@ -33,6 +23,7 @@ const Search = ({ placeholderText = 'Search' }) => {
         onChange={handleChange}
         value={userInput}
       />
+      <button onClick={(e) => searchHandler(e, userInput)}>{submitText}</button>
     </div>
   );
 };
