@@ -38,3 +38,10 @@
 .tweetText {
   text-align: left;
 }
+
+.dateWrapper {
+  font-family: 'Inter', 'sans-serif';
+  font-size: 0.8rem;
+  color: #3d3d3d;
+  padding: 0.5rem 0.5rem 0;
+}
