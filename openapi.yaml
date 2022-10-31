@@ -54,5 +54,7 @@ components:
           type: string
         text:
           type: string
+        created_at:
+          type: string
         author:
           $ref: '#/components/schemas/User'
