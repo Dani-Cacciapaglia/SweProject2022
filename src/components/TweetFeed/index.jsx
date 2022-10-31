@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
 import * as style from './TweetFeed.module.css';
 
 import TweetCard from '../TweetCard';
-
 import { SearchContext } from '../../hooks/SearchContext';
 
 const TweetFeed = () => {
-  const [result, setResult] = useState(null);
+  const { result } = useContext(SearchContext);
 
   return (
     <section className={style.feed}>
-      <SearchContext.Provider value={{ result, setResult }}>
-        {result && result.map((item) => <TweetCard tweetData={item} />)}
-      </SearchContext.Provider>
+      {result &&
+        result.length > 0 &&
+        result.map((item) => <TweetCard tweetData={item} />)}
     </section>
   );
 };
