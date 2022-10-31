@@ -17,7 +17,7 @@ const IndexPage = () => {
   const searchHandler = async (e, userInput) => {
     e.preventDefault();
 
-    const res = await axios.get(`${baseUrl}/${userInput}`);
+    const res = await axios.get(`${baseUrl}/${encodeURIComponent(userInput)}`);
 
     setResult(res.data);
 
