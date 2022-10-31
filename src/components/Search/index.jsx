@@ -23,7 +23,12 @@ const Search = ({
         onChange={handleChange}
         value={userInput}
       />
-      <button onClick={(e) => searchHandler(e, userInput)}>{submitText}</button>
+      <button
+        className={style.submitButton}
+        onClick={(e) => searchHandler(e, userInput)}
+      >
+        {submitText}
+      </button>
     </div>
   );
 };
