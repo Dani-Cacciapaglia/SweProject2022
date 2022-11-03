@@ -36,6 +36,15 @@ paths:
           description: Error
 components:
   schemas:
+    Place:
+      type: object
+      properties:
+        id:
+          type: string
+        full_name:
+          type: string
+        geo:
+          type: object
     User:
       type: object
       properties:
@@ -58,3 +67,5 @@ components:
           type: string
         author:
           $ref: '#/components/schemas/User'
+        place:
+          $ref: '#/components/schemas/Place'
