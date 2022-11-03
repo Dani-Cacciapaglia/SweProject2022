@@ -23,6 +23,13 @@ paths:
           description: The query to search.
           schema:
             type: string
+        - name: max_results
+          in: query
+          description: The maximum number of tweets.
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 100
       responses:
         '200':
           description: Successful operation

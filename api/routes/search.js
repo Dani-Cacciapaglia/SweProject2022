@@ -5,6 +5,7 @@ router.get('/:query', async (req, res) => {
 	try {
 		const tweetsData = await twitterClient.tweets.tweetsRecentSearch({
 			'query': req.params.query,
+			'max_results': req.query.max_results ?? 10,
 			'tweet.fields': 'created_at',
 			'expansions': 'author_id,geo.place_id',
 			'user.fields': 'profile_image_url',
