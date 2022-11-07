@@ -23,7 +23,7 @@
 }
 
 .profileText {
-  font-family: 'Inter', 'sans-serif';
+  font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
 
 .contentWrapper {
   margin-left: 1rem;
-  font-family: 'Inter', 'sans-serif';
+  font-family: 'Inter', sans-serif;
 }
 
 .tweetText {
@@ -43,7 +43,7 @@
 }
 
 .dateWrapper {
-  font-family: 'Inter', 'sans-serif';
+  font-family: 'Inter', sans-serif;
   font-size: 0.8rem;
   color: #3d3d3d;
   padding: 0.5rem 0.5rem 0;
