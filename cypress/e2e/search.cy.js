@@ -23,6 +23,17 @@ describe('Check if search works', () => {
 			expect(response.body[0].place).to.have.property('full_name');
 			expect(response.body[0].place).to.have.property('geo');
 		});
+		let yesterday_12 = new Date();
+		yesterday_12.setDate(yesterday_12.getDate() - 1);
+		yesterday_12.setHours(12);
+		let yesterday_13 = new Date();
+		yesterday_13.setDate(yesterday_13.getDate() - 1);
+		yesterday_13.setHours(13);
+		cy.request('GET', `/api/search/lasagne?start_time=${yesterday_12.toISOString()}&end_time=${yesterday_13.toISOString()}`).then((response) => {
+			expect(response.status).to.eq(200);
+			expect(new Date(response.body[0].created_at)).to.be.at.least(yesterday_12);
+			expect(new Date(response.body[0].created_at)).to.be.lessThan(yesterday_13);
+		});
 		cy.request({
 			method: 'GET',
 			url: '/api/search/"',
