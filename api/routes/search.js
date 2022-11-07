@@ -8,6 +8,7 @@ router.get('/:query', async (req, res) => {
 			'max_results': req.query.max_results ?? 10,
 			'start_time': req.query.start_time,
 			'end_time': req.query.end_time,
+			'next_token': req.query.next_token,
 			'tweet.fields': 'created_at',
 			'expansions': 'author_id,geo.place_id',
 			'user.fields': 'profile_image_url',
@@ -41,6 +42,9 @@ router.get('/:query', async (req, res) => {
 				};
 			}
 		});
+		if (tweetsData.meta.next_token) {
+			tweets[tweets.length - 1]['next_token'] = tweetsData.meta.next_token;
+		}
 		res.status(200).send(tweets);
 	} catch (err) {
 		res.status(400).send(err.error);

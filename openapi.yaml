@@ -88,3 +88,5 @@ components:
           $ref: '#/components/schemas/User'
         place:
           $ref: '#/components/schemas/Place'
+        next_token: # Only in the last tweet when there are older results
+          type: string
