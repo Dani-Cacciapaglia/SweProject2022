@@ -10,6 +10,49 @@ tags:
   - name: Tweets
     description: APIs to obtain tweets
 paths:
+  /chess/games:
+    post:
+      tags:
+        - Chess
+      summary: Create a chess game
+      description: ''
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChessGame'
+        '400':
+          description: Error
+  /chess/games/{gameID}/move:
+    post:
+      tags:
+        - Chess
+      summary: Make a move in a chess game
+      description: ''
+      parameters:
+        - name: gameID
+          in: path
+          required: true
+          description: The id of the chess game.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChessMove'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChessGame'
+        '400':
+          description: Error
   /search/{query}:
     get:
       tags:
@@ -55,6 +98,36 @@ paths:
           description: Error
 components:
   schemas:
+    ChessGame:
+      type: object
+      properties:
+        gameId:
+          type: integer
+        lastMoveLegal:
+          type: boolean
+        gameOver:
+          type: boolean
+        gameResult:
+          type: string
+          enum: [u, w, b, d]
+          description: >
+            Possible values: "u" undefined, "w" white win, "b" black win, "d" draw
+        fen:
+          type: string
+        turn:
+          type: string
+    ChessMove:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+        promotion:
+          type: string
+      required:
+        - from
+        - to
     Place:
       type: object
       properties:
