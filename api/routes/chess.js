@@ -17,7 +17,6 @@ router.get('/games/newGame', async (req, res) => {
 			'gameID': newMatchID
 		};
 	
-		console.log(matches);
 		res.status(200).send(matchInfo);
 	}
 	catch (err) {
@@ -60,9 +59,12 @@ router.post('/games/:gameID/makeMove', async (req, res) => {
 			if (matches[gameID].isDraw()) {
 				responseData['gameResult'] = 'd';
 			}
-			else if (matches[gameID].inCheckmate()) {
+			else if (matches[gameID].isCheckmate()) {
 				responseData['gameResult'] = turn;
 			}
+
+			//close game
+			delete matches[gameID];
 		}
 
 		if (lastMove === null) 
