@@ -43,3 +43,15 @@
   background-color: #00ccff;
   color: black;
 }
+
+.settings {
+  border: none;
+  border-radius: 50%;
+  padding: 0.1rem 0.4rem 0;
+  margin-left: 0.5rem;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.settings:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

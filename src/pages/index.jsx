@@ -14,10 +14,25 @@ const baseUrl = 'http://localhost:8000/api/search';
 const IndexPage = () => {
   const [result, setResult] = useState([]);
 
-  const searchHandler = async (e, userInput) => {
+  const searchHandler = async (
+    e,
+    userInput,
+    startTime,
+    endTime,
+    maxResults
+  ) => {
     e.preventDefault();
+    console.log(startTime, endTime, maxResults);
 
-    const res = await axios.get(`${baseUrl}/${encodeURIComponent(userInput)}`);
+    const params = {
+      start_time: startTime,
+      end_time: endTime,
+      max_results: maxResults,
+    };
+
+    const res = await axios.get(`${baseUrl}/${encodeURIComponent(userInput)}`, {
+      params,
+    });
 
     setResult(res.data);
 
