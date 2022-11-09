@@ -22,8 +22,8 @@
 
 			function createGame()
 			{
-				fetch('http://localhost:8000/api/chess/games/newGame', {
-					method: 'GET',
+				fetch('http://localhost:8000/api/chess/games/', {
+					method: 'POST',
 					headers: {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json'
@@ -34,11 +34,7 @@
 					return res.json();
 				})
 				.then((res) => {
-					gameStatus.gameID = res.gameID;
-					gameStatus.fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
-					gameStatus.gameOver = false;
-					gameStatus.gameResult = 'u';
-					gameStatus.turn = 'w';
+					gameStatus = res;
 				})
 				.catch((err) => {
 					console.log(err);
@@ -70,7 +66,7 @@
 				else if (pieces === 'bP' && target[1] === '1')
 					move['promotion'] = 'q';
 
-				fetch(`http://localhost:8000/api/chess/games/${gameStatus.gameID}/makeMove`, {
+				fetch(`http://localhost:8000/api/chess/games/${gameStatus.gameId}/move`, {
 					method: 'POST',
 					headers: {
 					  'Accept': 'application/json',
@@ -83,7 +79,7 @@
 					return res.json();
 				})
 				.then((res) => {
-					if (res.lastMoveLegal) updateStatus(res);
+					gameStatus = res;
 					board.position(gameStatus.fen);
 				})
 				.catch((err) => {
@@ -91,21 +87,8 @@
 				});
 			}
 
-			function updateStatus(moveResponse)
-			{
-			  	if (gameStatus.turn === 'b') gameStatus.turn = 'w';
-				else gameStatus.turn = 'b';
-
-				gameStatus.fen = moveResponse.fen;
-
-			  	if (moveResponse.gameOver) {
-			  		gameStatus.gameOver = true;
-					gameStatus.gameResult = moveResponse.gameResult;
-			  	}
-			}
-
 			let gameStatus = {
-				'gameID': 0,
+				'gameId': 0,
 				'gameOver': true,
 				'gameResult': '',
 				'turn': '',

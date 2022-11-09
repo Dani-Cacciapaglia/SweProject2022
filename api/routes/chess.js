@@ -5,8 +5,7 @@ const router = express.Router();
 let matches = {};
 let id = 0;
 
-
-router.get('/games/newGame', async (req, res) => {
+router.post('/games/', async (req, res) => {
 	try {
 		const newMatch = new Chess();
 		const newMatchID = id;
@@ -14,7 +13,12 @@ router.get('/games/newGame', async (req, res) => {
 		matches[newMatchID] = newMatch;
 
 		const matchInfo = { 
-			'gameID': newMatchID
+			'gameId': newMatchID,
+			'lastMoveLegal': true,
+			'gameOver': false,
+			'gameResult': 'u', 
+			'fen': 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR',
+			'turn': 'w'
 		};
 	
 		res.status(200).send(matchInfo);
@@ -24,10 +28,10 @@ router.get('/games/newGame', async (req, res) => {
 	}
 });
 
-router.post('/games/:gameID/makeMove', async (req, res) => {
+router.post('/games/:gameID/move', async (req, res) => {
 	try {
 		const gameID  = req.params.gameID;
-		if (!gameID in matches) 
+		if (!(gameID in matches)) 
 			throw new Error(`Game with id: ${gameID} not exist`);
 		if (!('from' in req.body)) 
 			throw new Error('Missing "from" field in request body');
@@ -48,11 +52,19 @@ router.post('/games/:gameID/makeMove', async (req, res) => {
 		const gameOver = matches[gameID].isGameOver();
 		const fen      = matches[gameID].fen();
 
+		/* gameResult possible value:
+		 * 'u' undefined
+		 * 'w' white win
+		 * 'b' black win
+		 * 'd' draw
+		 */
 		const responseData = {
+			'gameId': gameID,
 			'lastMoveLegal': true,
 			'gameOver': gameOver,
 			'gameResult': 'u', 
-			'fen': fen
+			'fen': fen,
+			'turn': matches[gameID].turn()
 		};
 
 		if (gameOver) {
@@ -79,3 +91,7 @@ router.post('/games/:gameID/makeMove', async (req, res) => {
 
 module.exports = router;
 
+
+/* https://www.npmjs.com/package/chess.js
+ * https://chessboardjs.com/index.html
+ */
