@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use(express.static('public'));
 app.use('/api/search', require('./api/routes/search.js'));
+app.use('/api/chess', require('./api/routes/chess.js'));
 
 /* istanbul ignore next */
 if (global.__coverage__) {
