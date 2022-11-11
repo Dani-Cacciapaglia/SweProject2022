@@ -27,7 +27,7 @@ const TweetCard = ({ tweetData }) => {
         </div>
       </div>
       <div className={style.contentWrapper}>{tweetData.text}</div>
-      <div className={style.dateWrapper}>{date}</div>
+      <div className={style.infoWrapper}>{date}{tweetData.place.full_name ? ' - ' + tweetData.place.full_name : ''}</div>
     </div>
   );
 };
