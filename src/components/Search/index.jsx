@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import * as style from './Search.module.css';
+import style from './Search.module.css';
 
 import { Sliders } from 'react-feather';
 

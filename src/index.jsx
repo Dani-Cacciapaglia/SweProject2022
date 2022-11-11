@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import * as style from './index.module.css';
+import style from './index.module.css';
 
-import Header from '../components/Header';
-import Search from '../components/Search';
-import TweetFeed from '../components/TweetFeed';
-import { SearchContext } from '../hooks/SearchContext';
+import Header from './components/Header';
+import Search from './components/Search';
+import TweetFeed from './components/TweetFeed';
+import { SearchContext } from './hooks/SearchContext';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 const baseUrl = 'http://localhost:8000/api/search';

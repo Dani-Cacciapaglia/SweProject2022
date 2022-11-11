@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as style from './Header.module.css';
+import style from './Header.module.css';
 
 import Logo from '../../assets/twitter-logo.jpg';
 

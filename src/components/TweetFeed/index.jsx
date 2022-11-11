@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import * as style from './TweetFeed.module.css';
+import style from './TweetFeed.module.css';
 
 import TweetCard from '../TweetCard';
 import { SearchContext } from '../../hooks/SearchContext';

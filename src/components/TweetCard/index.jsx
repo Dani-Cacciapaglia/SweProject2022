@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as style from './TweetCard.module.css';
+import style from './TweetCard.module.css';
 
 const TweetCard = ({ tweetData }) => {
   const rawDate = new Date(tweetData.created_at);
@@ -27,7 +27,10 @@ const TweetCard = ({ tweetData }) => {
         </div>
       </div>
       <div className={style.contentWrapper}>{tweetData.text}</div>
-      <div className={style.infoWrapper}>{date}{tweetData.place ? ' - ' + tweetData.place.full_name : ''}</div>
+      <div className={style.infoWrapper}>
+        {date}
+        {tweetData.place ? ' - ' + tweetData.place.full_name : ''}
+      </div>
     </div>
   );
 };
