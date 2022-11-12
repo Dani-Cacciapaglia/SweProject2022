@@ -33,7 +33,7 @@ const Search = ({
           <input
             className="text-lg grow border border-r-0 rounded-l-full pl-4 py-2"
             placeholder={placeholderText}
-            type="text"
+            type="search"
             onChange={handleChange}
             required
           />
