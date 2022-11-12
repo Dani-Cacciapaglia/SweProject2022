@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-
+import React, { useState, useContext } from 'react';
 import { Sliders } from 'react-feather';
+
+import { SearchContext } from '../hooks/SearchContext';
 
 const Search = ({
   placeholderText = 'Search',
   submitText = 'Search',
   searchHandler,
 }) => {
-  const [userInput, setUserInput] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [maxResults, setMaxResults] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
+  const { setUserInput, setStartTime, setEndTime, setMaxResults } =
+    useContext(SearchContext);
 
   const today = new Date();
   const lastWeek = new Date();
@@ -28,7 +27,7 @@ const Search = ({
         <form
           className="flex flex-row grow"
           onSubmit={(e) => {
-            searchHandler(e, userInput, startTime, endTime, maxResults);
+            searchHandler(e);
           }}
         >
           <input
@@ -36,7 +35,6 @@ const Search = ({
             placeholder={placeholderText}
             type="text"
             onChange={handleChange}
-            value={userInput}
             required
           />
           <input
@@ -53,12 +51,12 @@ const Search = ({
         </button>
       </div>
       {showSettings && (
-        <div className="flex flex-row max-w-prose mx-auto gap-2 my-2">
-          <div>
+        <div className="flex flex-row flex-wrap max-w-prose mx-auto gap-2 mx-4 mb-2">
+          <div class="flex flex-row md:flex-col items-center">
             <label htmlFor="startTime">Data di inizio:</label>
             <input
               id="startTime"
-              className="rounded-full"
+              className="rounded"
               type="datetime-local"
               max={today.toISOString().slice(0, -8)}
               min={lastWeek.toISOString().slice(0, -8)}
@@ -66,11 +64,11 @@ const Search = ({
               onChange={(e) => setStartTime(new Date(e.target.value))}
             />
           </div>
-          <div>
+          <div class="flex flex-row md:flex-col items-center">
             <label htmlFor="endTime">Data di fine:</label>
             <input
               id="endTime"
-              className="rounded-full"
+              className="rounded"
               type="datetime-local"
               max={today.toISOString().slice(0, -8)}
               min={lastWeek.toISOString().slice(0, -8)}
@@ -78,11 +76,11 @@ const Search = ({
               onChange={(e) => setEndTime(new Date(e.target.value))}
             />
           </div>
-          <div>
+          <div class="flex flex-row md:flex-col items-center">
             <label htmlFor="maxResults">Numero di risultati:</label>
             <input
               id="maxResults"
-              className="rounded-full"
+              className="rounded w-20"
               type="number"
               max="100"
               min="10"

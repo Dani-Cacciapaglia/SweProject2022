@@ -11,42 +11,68 @@ const baseUrl = 'http://localhost:8000/api/search';
 
 const App = () => {
   const [result, setResult] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [maxResults, setMaxResults] = useState(0);
+  const [lastSearch, setLastSearch] = useState('');
+  const [lastSearchParams, setLastSearchParams] = useState({});
 
-  const searchHandler = async (
-    e,
-    userInput,
-    startTime,
-    endTime,
-    maxResults
-  ) => {
+  const searchHandler = async (e) => {
     e.preventDefault();
-    console.log(startTime, endTime, maxResults);
 
     const params = {
       start_time: startTime || undefined,
       end_time: endTime || undefined,
       max_results: maxResults || undefined,
     };
+    setLastSearch(userInput);
+    setLastSearchParams(params);
 
     const res = await axios.get(`${baseUrl}/${encodeURIComponent(userInput)}`, {
       params,
     });
 
     setResult(res.data);
+  };
 
-    console.log(res);
+  const loadMore = async (e, next_token) => {
+    e.preventDefault();
+    const params = { ...lastSearchParams, next_token: next_token };
+
+    const res = await axios.get(
+      `${baseUrl}/${encodeURIComponent(lastSearch)}`,
+      {
+        params,
+      }
+    );
+
+    setResult(result.concat(res.data));
   };
 
   return (
-    <main className="max-w-screen-md mx-auto">
+    <main className="flex flex-col gap-2 items-center max-w-screen-md mx-auto m-4">
       <Header />
-      <Search
-        placeholderText="Cerca tweet..."
-        submitText="Cerca"
-        searchHandler={searchHandler}
-      />
-      <SearchContext.Provider value={{ result, setResult }}>
-        <TweetFeed />
+      <SearchContext.Provider
+        value={{
+          result,
+          setResult,
+          setUserInput,
+          setStartTime,
+          setEndTime,
+          setMaxResults,
+        }}
+      >
+        <Search
+          placeholderText="Cerca tweet..."
+          submitText="Cerca"
+          setUserInput
+          setStartTime
+          setEndTime
+          setMaxResults
+          searchHandler={searchHandler}
+        />
+        <TweetFeed loadMore={loadMore} />
       </SearchContext.Provider>
     </main>
   );
