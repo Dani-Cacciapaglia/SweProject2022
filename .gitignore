@@ -6,5 +6,5 @@ cypress/videos/
 .nyc_output/
 yarn.lock
 *.swp
-public/
+build/
 .DS_Store

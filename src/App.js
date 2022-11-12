@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import style from './index.module.css';
-
 import Header from './components/Header';
 import Search from './components/Search';
 import TweetFeed from './components/TweetFeed';
@@ -11,7 +9,7 @@ import { SearchContext } from './hooks/SearchContext';
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 const baseUrl = 'http://localhost:8000/api/search';
 
-const IndexPage = () => {
+const App = () => {
   const [result, setResult] = useState([]);
 
   const searchHandler = async (
@@ -40,7 +38,7 @@ const IndexPage = () => {
   };
 
   return (
-    <main className={style.main}>
+    <main className="max-w-screen-md mx-auto">
       <Header />
       <Search
         placeholderText="Cerca tweet..."
@@ -54,6 +52,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
-
-export const Head = () => <title>Tweets and sweets</title>;
+export default App;

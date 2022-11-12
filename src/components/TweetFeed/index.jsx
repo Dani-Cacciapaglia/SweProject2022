@@ -12,7 +12,7 @@ const TweetFeed = () => {
     <section className={style.feed}>
       {result &&
         result.length > 0 &&
-        result.map((item) => <TweetCard tweetData={item} />)}
+        result.map((item, index) => <TweetCard key={index} tweetData={item} />)}
     </section>
   );
 };
