@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Tab } from '@headlessui/react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
@@ -7,7 +7,6 @@ import { SearchContext } from '../hooks/SearchContext';
 
 const TweetFeed = ({ loadMore }) => {
   const { result } = useContext(SearchContext);
-  const [enableMap, setEnableMap] = useState(false);
 
   return (
     <>
@@ -19,7 +18,11 @@ const TweetFeed = ({ loadMore }) => {
             </Tab>
             <Tab
               className="border-b-2 disabled:text-neutral-700 enabled:hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300"
-              disabled={!enableMap}
+              disabled={
+                result.filter((item) => {
+                  return item.place;
+                }).length === 0
+              }
             >
               Mappa
             </Tab>
@@ -27,13 +30,9 @@ const TweetFeed = ({ loadMore }) => {
           <Tab.Panels>
             <Tab.Panel className="flex flex-col items-center">
               <section className="flex flex-col max-w-prose gap-4 p-4 mx-auto">
-                {result.map((item, index) => {
-                  // FIXME: Disable when no tweet have location
-                  if (!enableMap && item.place) {
-                    setEnableMap(true);
-                  }
-                  return <TweetCard key={index} tweetData={item} />;
-                })}
+                {result.map((item, index) => (
+                  <TweetCard key={index} tweetData={item} />
+                ))}
               </section>
               {result[result.length - 1].next_token && (
                 <button
