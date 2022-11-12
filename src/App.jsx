@@ -23,9 +23,9 @@ const App = () => {
     console.log(startTime, endTime, maxResults);
 
     const params = {
-      start_time: startTime,
-      end_time: endTime,
-      max_results: maxResults,
+      start_time: startTime || undefined,
+      end_time: endTime || undefined,
+      max_results: maxResults || undefined,
     };
 
     const res = await axios.get(`${baseUrl}/${encodeURIComponent(userInput)}`, {
