@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Andrea Bianchi, Daniele Cacciapaglia, Luca Bassi, Luca Orlandello, Simone Bortolai",
-  "keywords": [
-    "gatsby"
-  ],
   "scripts": {
     "test": "npx cypress run",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "npx prettier --write src/"
   },
   "repository": {
     "type": "git",
@@ -33,9 +31,11 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
+    "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.13",
     "cypress": "^10.10.0",
     "postcss": "^8.4.19",
+    "prettier": "^2.7.1",
     "tailwindcss": "^3.2.4"
   },
   "eslintConfig": {

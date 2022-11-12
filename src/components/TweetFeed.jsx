@@ -1,15 +1,13 @@
 import React, { useContext } from 'react';
 
-import style from './TweetFeed.module.css';
-
-import TweetCard from '../TweetCard';
-import { SearchContext } from '../../hooks/SearchContext';
+import TweetCard from './TweetCard';
+import { SearchContext } from '../hooks/SearchContext';
 
 const TweetFeed = () => {
   const { result } = useContext(SearchContext);
 
   return (
-    <section className={style.feed}>
+    <section className="flex flex-col max-w-prose gap-4 p-4 mx-auto">
       {result &&
         result.length > 0 &&
         result.map((item, index) => <TweetCard key={index} tweetData={item} />)}

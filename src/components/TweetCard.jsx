@@ -1,7 +1,5 @@
 import React from 'react';
 
-import style from './TweetCard.module.css';
-
 const TweetCard = ({ tweetData }) => {
   const rawDate = new Date(tweetData.created_at);
   const date = Intl.DateTimeFormat('it-IT', {
@@ -14,20 +12,20 @@ const TweetCard = ({ tweetData }) => {
   }).format(rawDate);
 
   return (
-    <div className={style.wrapper}>
-      <div className={style.profileWrapper}>
+    <div className="flex flex-col gap-2 border rounded-xl p-4 shadow">
+      <div className="flex flex-row gap-2 items-center">
         <img
-          className={style.profilePicture}
+          className="h-12 rounded-full aspect-square"
           src={tweetData.author.profile_image_url}
           alt="immagine profilo"
         />
-        <div className={style.profileText}>
-          <span className={style.profileName}>{tweetData.author.name}</span>
-          <span>@{tweetData.author.username}</span>
+        <div className="flex flex-col">
+          <span className="text-lg font-semibold">{tweetData.author.name}</span>
+          <span className="text-neutral-700">@{tweetData.author.username}</span>
         </div>
       </div>
-      <div className={style.contentWrapper}>{tweetData.text}</div>
-      <div className={style.infoWrapper}>
+      <div className="px-2">{tweetData.text}</div>
+      <div className="px-2 text-sm text-neutral-700">
         {date}
         {tweetData.place ? ' - ' + tweetData.place.full_name : ''}
       </div>
