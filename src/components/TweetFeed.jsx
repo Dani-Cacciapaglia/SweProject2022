@@ -14,26 +14,43 @@ const TweetFeed = ({ loadMore }) => {
         <Tab.Group>
           <Tab.List className="flex flex-row justify-around w-full max-w-prose">
             <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
-              Timeline
+              Reazione
             </Tab>
             <Tab
-              className="border-b-2 disabled:text-neutral-700 enabled:hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300"
-              disabled={
-                result.filter((item) => {
-                  return item.place;
-                }).length === 0
-              }
-            >
-              Mappa
+              className="border-b-2 disabled:text-neutral-700 enabled:hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+              Scacchi
             </Tab>
           </Tab.List>
           <Tab.Panels>
             <Tab.Panel className="flex flex-col items-center">
-              <Timeline loadMore={loadMore} />
+              <Tab.Group>
+                <Tab.List className="flex flex-row justify-around w-full max-w-prose">
+                  <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+                    Timeline
+                  </Tab>
+                  <Tab
+                    className="border-b-2 disabled:text-neutral-700 enabled:hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300"
+                    disabled={
+                     result.filter((item) => {
+                       return item.place;
+                      }).length === 0
+                   }>
+                     Mappa
+                   </Tab>
+                </Tab.List>
+               <Tab.Panels>
+                  <Tab.Panel className="flex flex-col items-center">
+                   <Timeline loadMore={loadMore} />
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <Map />
+                  </Tab.Panel>
+               </Tab.Panels>
+              </Tab.Group>
             </Tab.Panel>
-            <Tab.Panel>
-              <Map />
-            </Tab.Panel>
+              <Tab.Panel>
+                //inserimento scacchiera qui
+              </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
       )}
