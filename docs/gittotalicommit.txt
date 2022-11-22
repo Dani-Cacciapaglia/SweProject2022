@@ -1,0 +1,7 @@
+    50	Andrea Bianchi <bianan96@gmail.com>
+    22	Luca Bassi <luca.bassi14@studio.unibo.it>
+     8	Dani-Cacciapaglia <daniele.cacciapaglia@studio.unibo.it>
+     3	Luca <luca.orlandello@gmail.com>
+     3	Luca Bassi <luca@argoware.com>
+co-authored commits:
+89
