@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Tab } from '@headlessui/react';
 import { Timeline } from './Timeline';
 import { Map } from './Map';
+import { WordCloud } from './WordCloud';
 
 import { SearchContext } from '../hooks/SearchContext';
 
@@ -26,6 +27,9 @@ const TweetFeed = ({ loadMore }) => {
             >
               Mappa
             </Tab>
+            <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+              WordCloud
+            </Tab>
           </Tab.List>
           <Tab.Panels>
             <Tab.Panel className="flex flex-col items-center">
@@ -33,6 +37,9 @@ const TweetFeed = ({ loadMore }) => {
             </Tab.Panel>
             <Tab.Panel>
               <Map />
+            </Tab.Panel>
+            <Tab.Panel>
+              <WordCloud />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

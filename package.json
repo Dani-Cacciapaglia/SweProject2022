@@ -29,6 +29,7 @@
     "react-feather": "^2.0.10",
     "react-leaflet": "^4.1.0",
     "react-scripts": "5.0.1",
+    "react-vega": "^7.6.0",
     "twitter-api-sdk": "^1.2.1",
     "web-vitals": "^2.1.4"
   },
