@@ -5,6 +5,7 @@ import axios from 'axios';
 import Header from './components/Header';
 import Search from './components/Search';
 import TweetFeed from './components/TweetFeed';
+import TwitterChessboard from './components/TwitterChessboard';
 import { SearchContext } from './hooks/SearchContext';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
@@ -87,7 +88,9 @@ const App = () => {
               <TweetFeed loadMore={loadMore} />
             </SearchContext.Provider>
           </Tab.Panel>
-          <Tab.Panel>Scacchi</Tab.Panel>
+          <Tab.Panel>
+            <TwitterChessboard />
+          </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </main>
