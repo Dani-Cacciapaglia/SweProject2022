@@ -49,7 +49,7 @@ const TweetFeed = ({ loadMore }) => {
               </Tab.Group>
             </Tab.Panel>
               <Tab.Panel>
-                //Inserire scacchiera
+                //inserimento scacchiera qui
               </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
