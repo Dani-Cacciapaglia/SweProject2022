@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Tab } from '@headlessui/react';
 import axios from 'axios';
 
 import Header from './components/Header';
@@ -53,27 +54,42 @@ const App = () => {
   return (
     <main className="flex flex-col gap-2 items-center max-w-screen-md mx-auto m-4">
       <Header />
-      <SearchContext.Provider
-        value={{
-          result,
-          setResult,
-          setUserInput,
-          setStartTime,
-          setEndTime,
-          setMaxResults,
-        }}
-      >
-        <Search
-          placeholderText="Cerca tweet..."
-          submitText="Cerca"
-          setUserInput
-          setStartTime
-          setEndTime
-          setMaxResults
-          searchHandler={searchHandler}
-        />
-        <TweetFeed loadMore={loadMore} />
-      </SearchContext.Provider>
+      <Tab.Group>
+        <Tab.List className="flex flex-row justify-around w-full max-w-prose">
+          <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+            Ricerca
+          </Tab>
+          <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+            Scacchi
+          </Tab>
+        </Tab.List>
+        <Tab.Panels>
+          <Tab.Panel>
+            <SearchContext.Provider
+              value={{
+                result,
+                setResult,
+                setUserInput,
+                setStartTime,
+                setEndTime,
+                setMaxResults,
+              }}
+            >
+              <Search
+                placeholderText="Cerca tweet..."
+                submitText="Cerca"
+                setUserInput
+                setStartTime
+                setEndTime
+                setMaxResults
+                searchHandler={searchHandler}
+              />
+              <TweetFeed loadMore={loadMore} />
+            </SearchContext.Provider>
+          </Tab.Panel>
+          <Tab.Panel>Scacchi</Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
     </main>
   );
 };
