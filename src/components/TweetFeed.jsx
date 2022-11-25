@@ -13,12 +13,20 @@ const TweetFeed = ({ loadMore }) => {
     <>
       {result && result.length > 0 && (
         <Tab.Group>
-          <Tab.List className="flex flex-row justify-around w-full max-w-prose">
-            <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+          <Tab.List className="flex flex-row justify-around w-full max-w-prose mx-auto">
+            <Tab
+              className={({ selected }) =>
+                (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+                'border-b-2 hover:font-bold'
+              }
+            >
               Timeline
             </Tab>
             <Tab
-              className="border-b-2 disabled:text-neutral-700 enabled:hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300"
+              className={({ selected }) =>
+                (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+                'border-b-2 disabled:text-neutral-700 enabled:hover:font-bold'
+              }
               disabled={
                 result.filter((item) => {
                   return item.place;
@@ -27,7 +35,12 @@ const TweetFeed = ({ loadMore }) => {
             >
               Mappa
             </Tab>
-            <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+            <Tab
+              className={({ selected }) =>
+                (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+                'border-b-2 hover:font-bold'
+              }
+            >
               WordCloud
             </Tab>
           </Tab.List>
