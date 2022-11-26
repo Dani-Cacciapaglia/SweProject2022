@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Chessboard } from 'react-chessboard';
+import { TwitterShareButton, TwitterIcon } from 'react-share';
 
 const TwitterChessboard = () => {
-
   const [gameStatus, setGameStatus] = useState(
   	{
-		'gameId': 0,
+		'gameId': null,
+		'lastMoveLegal': true,
 		'gameOver': true,
 		'gameResult': '',
 		'turn': '',
@@ -42,55 +43,134 @@ const TwitterChessboard = () => {
 	  	if ((gameStatus.turn === 'w' && piece.search(/^b/) !== -1) ||
 			(gameStatus.turn === 'b' && piece.search(/^w/) !== -1)) {
 			return false;
-	  	}
-
-		let move = {
-			from: sourceSquare,
-			to: targetSquare
-		}
+  		}
 
 		//check promotion
-		if (piece === 'wP' && targetSquare[1] === '8')
-			move['promotion'] = 'q';
-		else if (piece === 'bP' && targetSquare[1] === '1')
-			move['promotion'] = 'q';
+		let promotion = null;
+		if ((piece === 'wP' && targetSquare[1] === '8') ||
+			(piece === 'bP' && targetSquare[1] === '1'))
+			promotion = 'q';
 
-		fetch(`http://localhost:8000/api/chess/games/${gameStatus.gameId}/move`, {
+		playMove(sourceSquare, targetSquare, promotion);
+	}
+
+	async function playMove(from, to, promotion)
+	{
+
+		let move = {
+			'from': from,
+			'to': to 
+		}
+
+		if (promotion != null)
+			move['promotion'] = promotion;
+
+		let response = await fetch(`http://localhost:8000/api/chess/games/${gameStatus.gameId}/move`, {
 			method: 'POST',
 			headers: {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(move)
-		})
-		.then((res) => {
-			if (!res.ok) throw new Error(`HTTP error: code ${res.status}`);
-			return res.json();
-		})
-		.then((res) => {
-			setGameStatus(res);
-		})
-		.catch((err) => {
-			console.error(err);
 		});
+		if (!response.ok) return false;
+		const gs = await response.json();
+		setGameStatus(gs);
+
+		return gs.lastMoveLegal;
 	}
 
+	async function playTwitterMove()
+	{
+		let response;
+		let tweetReplays;
+
+		response = await fetch(`http://localhost:8000/api/search/%23chessGame${gameStatus.gameId}`);
+		if (!response.ok) return;
+		const tweets = await response.json();
+		if (tweets.length == 0) return;
+
+		/* I tweet sono orinati dal più recente al più vecchio. */
+		const tweet = tweets[0];
+		const tweetId = tweet.id;
+
+		response = await fetch(`http://localhost:8000/api/search/conversation_id%3A${tweetId}`);
+		if (!response.ok) return;
+		tweetReplays = await response.json();
+		if (tweetReplays.length == 0) return;
+
+		let moveVotes = {};
+		for (let i = 0; i < tweetReplays.length; i++) {
+			const text = tweetReplays[i].text;
+			const move = text.match(/[abcdefgh][12345678]-[abcdefgh][12345678](?:-q)?/);
+			if (move != null) {
+				if (!(move in moveVotes)) {
+					moveVotes[move] = 0;
+				}
+
+				moveVotes[move] += 1;
+			}
+		}
+
+		const moveVotesList = Object.keys(moveVotes)
+			.map((key) => { return [key, moveVotes[key]]; });
+
+		moveVotesList.sort((first, second) => {
+  			return second[1] - first[1];
+		});
+
+		for (let i = 0; i < moveVotesList.length; i++) {
+			const fromToProm = moveVotesList[i][0].split('-');
+			let promotion = null;
+			if (fromToProm.length > 2) 
+				promotion = fromToProm[2];
+
+			const success = await playMove(fromToProm[0], fromToProm[1], promotion);
+			if (success) break;
+		}
+	}
 
 	
-  return (
-    <div>
-      <Chessboard 
-	  	position={gameStatus.fen}
-		onPieceDrop={onDrop}
-	  />
-	  <button 
-          className="rounded-full bg-neutral-200 hover:bg-neutral-300 aspect-square ml-2 p-2 self-center"
-	  		onClick={createGame}
-		>
-	  	Inizia partita
-	  </button>
-    </div>
-  );
-};
+	return (
+  		<div>
+      		<Chessboard 
+	  			position={gameStatus.fen}
+				onPieceDrop={onDrop}
+	  		/>
+	  
+	  		<div className="flex flex-row gap-2 pt-3 justify-center">
+
+				<div className="flex items-center">
+					<button 
+					 className="border-2 border-sky-500 rounded-xl p-2 flex flex-row justify-center items-center gap-1"
+					 onClick={createGame}>
+						Inizia partita
+					</button>
+				</div>
+
+				<TwitterShareButton
+				 title={'test'}
+				 url={'http://www.test.it/'}
+				 hashtags={[`chessGame${gameStatus.gameId}`]}
+				 disabled={gameStatus.gameOver}>
+					<div className="border-2 border-sky-500 rounded-xl p-2 flex flex-row justify-center items-center gap-1">
+						<TwitterIcon size={32} round={true}/> 
+						<span>Condividi con Twitter</span>
+					</div>
+				</TwitterShareButton>
+
+				<div className="flex items-center">
+					<button 
+					 className="border-2 border-sky-500 rounded-xl p-2 flex flex-row justify-center items-center gap-1"
+					 onClick={playTwitterMove}
+					 disabled={gameStatus.gameOver}>
+						<span>Mossa da Twitter</span>
+					</button>
+				</div>
+
+	  		</div>
+    	</div>
+	);
+}
 
 export default TwitterChessboard;
