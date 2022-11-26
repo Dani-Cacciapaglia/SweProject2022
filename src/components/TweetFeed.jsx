@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Tab } from '@headlessui/react';
 import { Timeline } from './Timeline';
 import { Map } from './Map';
+import { WordCloud } from './WordCloud';
 
 import { SearchContext } from '../hooks/SearchContext';
 
@@ -12,12 +13,20 @@ const TweetFeed = ({ loadMore }) => {
     <>
       {result && result.length > 0 && (
         <Tab.Group>
-          <Tab.List className="flex flex-row justify-around w-full max-w-prose">
-            <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+          <Tab.List className="flex flex-row justify-around w-full max-w-prose mx-auto">
+            <Tab
+              className={({ selected }) =>
+                (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+                'border-b-2 hover:font-bold'
+              }
+            >
               Timeline
             </Tab>
             <Tab
-              className="border-b-2 disabled:text-neutral-700 enabled:hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300"
+              className={({ selected }) =>
+                (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+                'border-b-2 disabled:text-neutral-700 enabled:hover:font-bold'
+              }
               disabled={
                 result.filter((item) => {
                   return item.place;
@@ -26,6 +35,14 @@ const TweetFeed = ({ loadMore }) => {
             >
               Mappa
             </Tab>
+            <Tab
+              className={({ selected }) =>
+                (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+                'border-b-2 hover:font-bold'
+              }
+            >
+              WordCloud
+            </Tab>
           </Tab.List>
           <Tab.Panels>
             <Tab.Panel className="flex flex-col items-center">
@@ -33,6 +50,9 @@ const TweetFeed = ({ loadMore }) => {
             </Tab.Panel>
             <Tab.Panel>
               <Map />
+            </Tab.Panel>
+            <Tab.Panel>
+              <WordCloud />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
