@@ -161,7 +161,7 @@ const TwitterChessboard = () => {
 
 				<div className="flex items-center">
 					<button 
-					 className="border-2 border-sky-500 rounded-xl p-2 flex flex-row justify-center items-center gap-1"
+					 className="border-2 border-sky-500 rounded-xl p-2 flex flex-row justify-center items-center gap-1 disabled:opacity-60"
 					 onClick={playTwitterMove}
 					 disabled={gameStatus.gameOver}>
 						<span>Mossa da Twitter</span>
