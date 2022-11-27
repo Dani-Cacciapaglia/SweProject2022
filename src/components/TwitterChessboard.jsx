@@ -88,7 +88,7 @@ const TwitterChessboard = () => {
 		response = await fetch(`http://localhost:8000/api/search/%23chessGame${gameStatus.gameId}`);
 		if (!response.ok) return;
 		const tweets = await response.json();
-		if (tweets.length == 0) return;
+		if (tweets.length === 0) return;
 
 		/* I tweet sono orinati dal più recente al più vecchio. */
 		const tweet = tweets[0];
@@ -97,7 +97,7 @@ const TwitterChessboard = () => {
 		response = await fetch(`http://localhost:8000/api/search/conversation_id%3A${tweetId}`);
 		if (!response.ok) return;
 		tweetReplays = await response.json();
-		if (tweetReplays.length == 0) return;
+		if (tweetReplays.length === 0) return;
 
 		let moveVotes = {};
 		for (let i = 0; i < tweetReplays.length; i++) {
