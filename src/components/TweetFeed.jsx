@@ -3,6 +3,7 @@ import { Tab } from '@headlessui/react';
 import { Timeline } from './Timeline';
 import { Map } from './Map';
 import { WordCloud } from './WordCloud';
+import { Histogram } from './Histogram';
 
 import { SearchContext } from '../hooks/SearchContext';
 
@@ -43,6 +44,14 @@ const TweetFeed = ({ loadMore }) => {
             >
               WordCloud
             </Tab>
+            <Tab
+              className={({ selected }) =>
+                (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+                'border-b-2 hover:font-bold'
+              }
+            >
+              Istogramma
+            </Tab>
           </Tab.List>
           <Tab.Panels>
             <Tab.Panel className="flex flex-col items-center">
@@ -53,6 +62,9 @@ const TweetFeed = ({ loadMore }) => {
             </Tab.Panel>
             <Tab.Panel>
               <WordCloud />
+            </Tab.Panel>
+            <Tab.Panel>
+              <Histogram />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
