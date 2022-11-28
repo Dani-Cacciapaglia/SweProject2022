@@ -151,8 +151,8 @@ const TwitterChessboard = () => {
         </div>
 
         <TwitterShareButton
-          title={'test'}
-          url={'http://www.test.it/'}
+          title={'Commenta con la prossima mossa!\n Visualizza la posizione: '}
+          url={`https://fen2png.com/api/?fen=${encodeURIComponent(gameStatus.fen)} \n\n`}
           hashtags={[`chessGame${gameStatus.gameId}`]}
           disabled={gameStatus.gameOver}
         >

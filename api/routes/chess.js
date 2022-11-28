@@ -79,13 +79,9 @@ router.post('/games/:gameID/move', async (req, res) => {
 			delete matches[gameID];
 		}
 
-		console.log(lastMove);
 		if (lastMove == null) {
-			console.log('lastMoveLegal: false');
 			responseData['lastMoveLegal'] = false;
 		}
-
-		console.log(responseData);
 
 		res.status(200).send(responseData);
 	}
