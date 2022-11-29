@@ -71,7 +71,7 @@ export const Histogram = () => {
       {
         orient: 'left',
         scale: 'yscale',
-        tickCount: 7,
+        tickMinStep: 1,
         title: 'Numero di tweet',
       },
     ],
