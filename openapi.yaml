@@ -128,6 +128,21 @@ components:
       required:
         - from
         - to
+    Media:
+      type: object
+      properties:
+        media_key:
+          type: string
+        type:
+          type: string
+        width:
+          type: string
+        height:
+          type: string
+        url:
+          type: string
+        alt_text:
+          type: string
     Place:
       type: object
       properties:
@@ -161,5 +176,9 @@ components:
           $ref: '#/components/schemas/User'
         place:
           $ref: '#/components/schemas/Place'
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/Media'
         next_token: # Only in the last tweet when there are older results
           type: string

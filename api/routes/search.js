@@ -10,10 +10,15 @@ router.get('/:query', async (req, res) => {
 			'end_time': req.query.end_time,
 			'next_token': req.query.next_token,
 			'tweet.fields': 'created_at',
-			'expansions': 'author_id,geo.place_id',
+			'expansions': 'author_id,geo.place_id,attachments.media_keys',
 			'user.fields': 'profile_image_url',
-			'place.fields': 'geo'
+			'place.fields': 'geo',
+			'media.fields': 'media_key,type,width,height,url,alt_text'
 		});
+		let tweets = [];
+		if (tweetsData.meta.result_count == 0) {
+			return res.status(200).send(tweets);
+		}
 		let users = new Map();
 		tweetsData.includes.users.forEach((user) => {
 			users.set(user.id, {'name': user.name, 'username': user.username, 'profile_image_url': user.profile_image_url});
@@ -24,7 +29,12 @@ router.get('/:query', async (req, res) => {
 				places.set(place.id, {'full_name': place.full_name, 'geo': place.geo});
 			});
 		}
-		let tweets = [];
+		let media = new Map();
+		if (tweetsData.includes.media) {
+			tweetsData.includes.media.forEach((m) => {
+				media.set(m.media_key, {'type': m.type, 'width': m.width, 'height': m.height, 'url': m.url, 'alt_text': m.alt_text});
+			});
+		}
 		tweetsData.data.forEach((tweet) => {
 			tweets.push({
 				'id': tweet.id,
@@ -40,6 +50,19 @@ router.get('/:query', async (req, res) => {
 					'id': tweet.geo.place_id,
 					...places.get(tweet.geo.place_id)
 				};
+			}
+			if (tweet.attachments) {
+				tweet.attachments.media_keys.forEach((media_key) => {
+					if (media.get(media_key).type == 'photo') {
+						if (!tweets[tweets.length - 1]['media']) {
+							tweets[tweets.length - 1]['media'] = [];
+						}
+						tweets[tweets.length - 1]['media'].push({
+							'media_key': media_key,
+							...media.get(media_key)
+						});
+					}
+				});
 			}
 		});
 		if (tweetsData.meta.next_token) {
