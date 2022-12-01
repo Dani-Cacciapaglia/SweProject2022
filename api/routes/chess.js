@@ -17,7 +17,7 @@ router.post('/games/', async (req, res) => {
 			'lastMoveLegal': true,
 			'gameOver': false,
 			'gameResult': 'u', 
-			'fen': 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR',
+			'fen': matches[newMatchID].fen(),
 			'turn': 'w'
 		};
 	
@@ -79,8 +79,9 @@ router.post('/games/:gameID/move', async (req, res) => {
 			delete matches[gameID];
 		}
 
-		if (lastMove === null) 
+		if (lastMove == null) {
 			responseData['lastMoveLegal'] = false;
+		}
 
 		res.status(200).send(responseData);
 	}
