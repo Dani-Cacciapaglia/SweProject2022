@@ -25,6 +25,17 @@ const TweetCard = ({ tweetData }) => {
         </div>
       </div>
       <div className="px-2">{tweetData.text}</div>
+      {tweetData.media &&
+        tweetData.media.map((media, index) => (
+          <img
+            key={index}
+            className="px-2"
+            src={media.url}
+            alt={media.alt_text}
+            width={media.width}
+            height={media.height}
+          />
+        ))}
       <div className="px-2 text-sm text-neutral-700">
         {date}
         {tweetData.place ? ' - ' + tweetData.place.full_name : ''}
