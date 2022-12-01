@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Search from './components/Search';
 import TweetFeed from './components/TweetFeed';
 import TwitterChessboard from './components/TwitterChessboard';
+import Fantacitorio from './components/Fantacitorio';
 import { SearchContext } from './hooks/SearchContext';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
@@ -31,9 +32,12 @@ const App = () => {
     setLastSearch(userInput);
     setLastSearchParams(params);
 
-    const res = await axios.get(`${window.$apiUrl}/search/${encodeURIComponent(userInput)}`, {
-      params,
-    });
+    const res = await axios.get(
+      `${window.$apiUrl}/search/${encodeURIComponent(userInput)}`,
+      {
+        params,
+      }
+    );
 
     setResult(res.data);
   };
@@ -63,6 +67,9 @@ const App = () => {
           <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
             Scacchi
           </Tab>
+          <Tab className="border-b-2 hover:font-bold ui-selected:font-bold ui-selected:border-b-4 ui-selected:border-sky-300">
+            Fantacitorio
+          </Tab>
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
@@ -90,6 +97,9 @@ const App = () => {
           </Tab.Panel>
           <Tab.Panel>
             <TwitterChessboard />
+          </Tab.Panel>
+          <Tab.Panel>
+            <Fantacitorio />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
