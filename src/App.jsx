@@ -9,7 +9,7 @@ import TwitterChessboard from './components/TwitterChessboard';
 import { SearchContext } from './hooks/SearchContext';
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-const baseUrl = 'http://localhost:8000/api/search';
+window.$apiUrl = 'http://localhost:8000/api';
 
 const App = () => {
   const [result, setResult] = useState([]);
@@ -31,7 +31,7 @@ const App = () => {
     setLastSearch(userInput);
     setLastSearchParams(params);
 
-    const res = await axios.get(`${baseUrl}/${encodeURIComponent(userInput)}`, {
+    const res = await axios.get(`${window.$apiUrl}/search/${encodeURIComponent(userInput)}`, {
       params,
     });
 
@@ -43,7 +43,7 @@ const App = () => {
     const params = { ...lastSearchParams, next_token: next_token };
 
     const res = await axios.get(
-      `${baseUrl}/${encodeURIComponent(lastSearch)}`,
+      `${window.$apiUrl}/search/${encodeURIComponent(lastSearch)}`,
       {
         params,
       }

@@ -13,7 +13,7 @@ const TwitterChessboard = () => {
   });
 
   function createGame() {
-    fetch('http://localhost:8000/api/chess/games/', {
+    fetch(`${window.$apiUrl}/chess/games/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -64,7 +64,7 @@ const TwitterChessboard = () => {
     if (promotion != null) move['promotion'] = promotion;
 
     let response = await fetch(
-      `http://localhost:8000/api/chess/games/${gameStatus.gameId}/move`,
+      `${window.$apiUrl}/chess/games/${gameStatus.gameId}/move`,
       {
         method: 'POST',
         headers: {
@@ -86,7 +86,7 @@ const TwitterChessboard = () => {
     let tweetReplays;
 
     response = await fetch(
-      `http://localhost:8000/api/search/%23chessGame${gameStatus.gameId}`
+      `${window.$apiUrl}/search/%23chessGame${gameStatus.gameId}`
     );
     if (!response.ok) return;
     const tweets = await response.json();
@@ -97,7 +97,7 @@ const TwitterChessboard = () => {
     const tweetId = tweet.id;
 
     response = await fetch(
-      `http://localhost:8000/api/search/conversation_id%3A${tweetId}`
+      `${window.$apiUrl}/search/conversation_id%3A${tweetId}`
     );
     if (!response.ok) return;
     tweetReplays = await response.json();
@@ -152,7 +152,9 @@ const TwitterChessboard = () => {
 
         <TwitterShareButton
           title={'Commenta con la prossima mossa!\n Visualizza la posizione: '}
-          url={`https://fen2png.com/api/?fen=${encodeURIComponent(gameStatus.fen)} \n\n`}
+          url={`https://fen2png.com/api/?fen=${encodeURIComponent(
+            gameStatus.fen
+          )} \n\n`}
           hashtags={[`chessGame${gameStatus.gameId}`]}
           disabled={gameStatus.gameOver}
         >
