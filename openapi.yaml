@@ -96,6 +96,49 @@ paths:
                   $ref: '#/components/schemas/Tweet'
         '400':
           description: Error
+  /user/{username}:
+    get:
+      tags:
+        - Tweets
+      summary: Get recent tweets of @{username}
+      description: ''
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: The username of the user.
+          schema:
+            type: string
+        - name: max_results
+          in: query
+          description: The maximum number of tweets.
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 100
+        - name: start_time
+          in: query
+          description: The oldest UTC timestamp from which the Tweets will be provided.
+          schema:
+            type: string
+            format: date-time
+        - name: end_time
+          in: query
+          description: The newest, most recent UTC timestamp to which the Tweets will be provided.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tweet'
+        '400':
+          description: Error
 components:
   schemas:
     ChessGame:
