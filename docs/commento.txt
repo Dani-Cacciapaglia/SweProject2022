@@ -1,0 +1,13 @@
+13 novembre
+1man band
+taiga(in uso)
+
+4 dicembre
+mattermost in uso
+Git abbastanza distribuiti anche se manca qualche nome
+Non si vedono test
+Taiga in uso
+NOn si vedono documenti (schemi, retrospettive, ecc.)
+
+
+
