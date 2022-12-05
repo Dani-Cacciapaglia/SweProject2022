@@ -32,15 +32,15 @@ describe('Check if user works', () => {
 		let yesterday_12 = new Date();
 		yesterday_12.setDate(yesterday_12.getDate() - 1);
 		yesterday_12.setHours(12);
-		yesterday_12.setMinutes(45);
-		let yesterday_13 = new Date();
-		yesterday_13.setDate(yesterday_13.getDate() - 1);
-		yesterday_13.setHours(13);
-		yesterday_13.setMinutes(0);
-		cy.request('GET', `/api/user/Agenzia_Ansa?max_results=100&start_time=${yesterday_12.toISOString()}&end_time=${yesterday_13.toISOString()}`).then((response) => {
+		yesterday_12.setMinutes(0);
+		let yesterday_16 = new Date();
+		yesterday_16.setDate(yesterday_16.getDate() - 1);
+		yesterday_16.setHours(16);
+		yesterday_16.setMinutes(0);
+		cy.request('GET', `/api/user/Agenzia_Ansa?max_results=100&start_time=${yesterday_12.toISOString()}&end_time=${yesterday_16.toISOString()}`).then((response) => {
 			expect(response.status).to.eq(200);
 			expect(new Date(response.body[0].created_at)).to.be.at.least(yesterday_12);
-			expect(new Date(response.body[0].created_at)).to.be.lessThan(yesterday_13);
+			expect(new Date(response.body[0].created_at)).to.be.lessThan(yesterday_16);
 		});
 		cy.request({
 			method: 'GET',
