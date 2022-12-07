@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import TweetCard from './TweetCard';
+
+import './style.css';
 
 export const FantacitorioTeams = () => {
   const [teams, setTeams] = useState([]);
@@ -14,9 +16,12 @@ export const FantacitorioTeams = () => {
     setTeams(res.data);
     console.log(teams);
   };
+
+  // useEffect(() => searchTeams, []);
+
   return (
-    <>
-      <section className="flex flex-col max-w-prose gap-4 mx-auto">
+    <div className="fantacitorio-teams-div">
+      <section className="flex flex-col max-w-prose gap-4 mx-auto fantacitorio-teams-section">
         {teams.map(
           (item, index) =>
             item.media &&
@@ -27,12 +32,13 @@ export const FantacitorioTeams = () => {
         )}
       </section>
       <button
+        className="btn"
         onClick={(e) => {
           searchTeams();
         }}
       >
         Carica squadre
       </button>
-    </>
+    </div>
   );
 };
