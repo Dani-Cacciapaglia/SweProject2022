@@ -53,6 +53,23 @@ paths:
                 $ref: '#/components/schemas/ChessGame'
         '400':
           description: Error
+  /fantacitorio/scores:
+    get:
+      tags:
+        - Fantacitorio
+      summary: Get weekly scores of Fantacitorio
+      description: ''
+      responses:
+        '200':
+          description: An array of objects, keys are politician surnames, values the weekly points
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Error
   /search/{query}:
     get:
       tags:
