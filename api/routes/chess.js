@@ -6,26 +6,21 @@ let matches = {};
 let id = 0;
 
 router.post('/games/', async (req, res) => {
-	try {
-		const newMatch = new Chess();
-		const newMatchID = id;
-		id += 1;
-		matches[newMatchID] = newMatch;
+	const newMatch = new Chess();
+	const newMatchID = id;
+	id += 1;
+	matches[newMatchID] = newMatch;
 
-		const matchInfo = { 
-			'gameId': newMatchID,
-			'lastMoveLegal': true,
-			'gameOver': false,
-			'gameResult': 'u', 
-			'fen': matches[newMatchID].fen(),
-			'turn': 'w'
-		};
-	
-		res.status(200).send(matchInfo);
-	}
-	catch (err) {
-		res.status(400).send(err);
-	}
+	const matchInfo = { 
+		'gameId': newMatchID,
+		'lastMoveLegal': true,
+		'gameOver': false,
+		'gameResult': 'u', 
+		'fen': matches[newMatchID].fen(),
+		'turn': 'w'
+	};
+
+	res.status(200).send(matchInfo);
 });
 
 router.post('/games/:gameID/move', async (req, res) => {
