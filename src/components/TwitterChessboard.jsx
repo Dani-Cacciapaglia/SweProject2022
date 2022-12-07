@@ -138,7 +138,11 @@ const TwitterChessboard = () => {
 
   return (
     <div>
-      <Chessboard position={gameStatus.fen} onPieceDrop={onDrop} />
+      <Chessboard
+        position={gameStatus.fen}
+        onPieceDrop={onDrop}
+        boardOrientation={gameStatus.turn === 'w' ? 'white' : 'black'}
+      />
 
       <div className="flex flex-row gap-2 pt-3 justify-center">
         <div className="flex items-center">
