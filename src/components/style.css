@@ -1,0 +1,22 @@
+.fantacitorio-tabs {
+  width: 600px;
+}
+
+.fantacitorio-teams-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fantacitorio-teams-section {
+  margin-top: 1rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 15px;
+  background-color: #00acee;
+  color: white;
+  padding: 8px 12px;
+  margin: 10px auto;
+}

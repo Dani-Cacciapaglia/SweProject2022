@@ -2,10 +2,12 @@ import React from 'react';
 import { Tab } from '@headlessui/react';
 import { FantacitorioTeams } from './FantacitorioTeams';
 
+import './style.css';
+
 const Fantacitorio = () => {
   return (
     <Tab.Group>
-      <Tab.List className="flex flex-row justify-around w-full max-w-prose mx-auto">
+      <Tab.List className="flex flex-row justify-around max-w-prose mx-auto fantacitorio-tabs">
         <Tab
           className={({ selected }) =>
             (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
