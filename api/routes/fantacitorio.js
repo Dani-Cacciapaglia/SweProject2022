@@ -23,19 +23,19 @@ router.get('/scores', async (req, res) => {
 					'tweet.fields': 'created_at',
 				});
 				next_token = tweetsData.meta.next_token;
-				for (var tweet of tweetsData.data) {
+				for (const tweet of tweetsData.data) {
 					tweets.push({'text': tweet.text, 'created_at': tweet.created_at});
 				}
 			} while (next_token);
-			for (var tweet of tweets) {
+			for (const tweet of tweets) {
 				const lines = tweet.text.split('\n');
-				for (var line of lines) {
+				for (const line of lines) {
 					const score = line.match(numberPattern);
 					if (score) {
 						const words = line.split(' ');
 						if (words) {
 							let politician;
-							for (var word of words) {
+							for (const word of words) {
 								politician = politicians.find((politician) => (politician.toLowerCase() == word.toLowerCase()));
 								if (politician) {
 									scores[scores.length - 1][politician] = (scores[scores.length - 1][politician] ?? 0) + parseInt(score[0]);
