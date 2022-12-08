@@ -14,18 +14,20 @@ export const FantacitorioSearch = () => {
     let res;
     try {
       res = await axios.get(
-        `${window.$apiUrl}/user/${encodeURIComponent(e.target[0].value)}`,
+        `${window.$apiUrl}/user/${encodeURIComponent(
+          e.target[0].value.trim().replace('@', '')
+        )}`,
         { params: { max_results: 100 } }
       );
 
       let t = [];
-      for (let i = 0; i < res.data.length; i++) {
+      for (const data of res.data) {
         if (
-          res.data[i].media &&
-          res.data[i].media[0].width === 1024 &&
-          res.data[i].media[0].height === 512
+          data.media &&
+          data.media[0].width === 1024 &&
+          data.media[0].height === 512
         ) {
-          t.push(res.data[i]);
+          t.push(data);
         }
       }
       setUserTeams(t);
