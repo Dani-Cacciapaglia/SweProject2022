@@ -22,8 +22,8 @@ export const FantacitorioSearch = () => {
       for (let i = 0; i < res.data.length; i++) {
         if (
           res.data[i].media &&
-          res.data[i].media[0].width == 1024 &&
-          res.data[i].media[0].height == 512
+          res.data[i].media[0].width === 1024 &&
+          res.data[i].media[0].height === 512
         ) {
           t.push(res.data[i]);
         }
