@@ -104,8 +104,8 @@ const TwitterChessboard = () => {
     if (tweetReplays.length === 0) return;
 
     let moveVotes = {};
-    for (let i = 0; i < tweetReplays.length; i++) {
-      const text = tweetReplays[i].text;
+    for (const tweetReplay of tweetReplays) {
+      const text = tweetReplay.text;
       const move = text.match(
         /[abcdefgh][12345678]-[abcdefgh][12345678](?:-q)?/
       );
@@ -126,8 +126,8 @@ const TwitterChessboard = () => {
       return second[1] - first[1];
     });
 
-    for (let i = 0; i < moveVotesList.length; i++) {
-      const fromToProm = moveVotesList[i][0].split('-');
+    for (const moveVote of moveVotesList) {
+      const fromToProm = moveVote[0].split('-');
       let promotion = null;
       if (fromToProm.length > 2) promotion = fromToProm[2];
 

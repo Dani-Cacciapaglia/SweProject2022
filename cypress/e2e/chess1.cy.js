@@ -109,11 +109,11 @@ describe('Check if chess works', () => {
 		 
 		const BadMoves = [ ["h5", "h5"], ["a1", "h1"], ["e1", "f9"], ["d5", "z0"] ];
 
-		for (let i = 0; i < BadMoves.length; i++) {
+		for (const BadMove of BadMoves) {
 			cy.request(
 				'POST', 
 				`/api/chess/games/${gameId}/move`, 
-				{ "from": BadMoves[i][0], "to": BadMoves[i][1] }
+				{ "from": BadMove[0], "to": BadMove[1] }
 			)
 			.then((response) => {
 				expect(response.status).to.eq(200);
