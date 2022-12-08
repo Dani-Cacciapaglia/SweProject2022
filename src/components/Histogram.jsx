@@ -8,7 +8,7 @@ export const Histogram = () => {
 
   const spec = {
     $schema: 'https://vega.github.io/schema/vega/v5.json',
-    width: 600,
+    width: 768,
     height: 300,
     autosize: { type: 'fit', resize: true, contains: 'padding' },
 
@@ -111,7 +111,7 @@ export const Histogram = () => {
   };
   return (
     <>
-      <Vega spec={spec} data={wordData} />
+      <Vega spec={spec} data={wordData} actions={false} />
     </>
   );
 };

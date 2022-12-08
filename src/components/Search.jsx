@@ -51,7 +51,7 @@ const Search = ({
         </button>
       </div>
       {showSettings && (
-        <div className="flex flex-row flex-wrap max-w-prose mx-auto gap-2 mx-4 mb-2">
+        <div className="flex flex-row flex-wrap justify-between max-w-prose mx-auto gap-2 mx-auto mb-2">
           <div class="flex flex-row md:flex-col items-center">
             <label htmlFor="startTime">Data di inizio:</label>
             <input

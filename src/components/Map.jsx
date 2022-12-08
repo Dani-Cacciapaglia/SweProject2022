@@ -8,7 +8,7 @@ export const Map = () => {
 
   return (
     <MapContainer
-      className="w-screen h-[80vh] max-w-screen-lg"
+      className="w-screen h-[80vh] max-w-screen-md"
       center={[20, 0]}
       zoom={2}
     >

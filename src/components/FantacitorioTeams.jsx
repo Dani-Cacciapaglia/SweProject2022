@@ -3,8 +3,6 @@ import axios from 'axios';
 
 import TweetCard from './TweetCard';
 
-import './style.css';
-
 export const FantacitorioTeams = () => {
   const [teams, setTeams] = useState([]);
   const [next_token, setNextToken] = useState('');
@@ -23,8 +21,8 @@ export const FantacitorioTeams = () => {
   }, [next_token]);
 
   return (
-    <div className="fantacitorio-teams-div">
-      <section className="flex flex-col max-w-prose gap-4 mx-auto fantacitorio-teams-section">
+    <div className="flex flex-col gap-2 mt-2">
+      <section className="flex flex-col max-w-prose gap-4 mx-auto">
         {teams.map(
           (item, index) =>
             item.media &&
@@ -36,7 +34,7 @@ export const FantacitorioTeams = () => {
       </section>
       {teams.length > 0 && teams[teams.length - 1].next_token && (
         <button
-          className="btn"
+          className="bg-sky-300 hover:bg-sky-400 rounded p-2 mx-auto"
           onClick={(e) => {
             setNextToken(teams[teams.length - 1].next_token);
           }}

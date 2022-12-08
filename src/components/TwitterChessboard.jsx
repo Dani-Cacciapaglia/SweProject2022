@@ -142,6 +142,7 @@ const TwitterChessboard = () => {
         position={gameStatus.fen}
         onPieceDrop={onDrop}
         boardOrientation={gameStatus.turn === 'w' ? 'white' : 'black'}
+        boardWidth="768"
       />
 
       <div className="flex flex-row gap-2 pt-3 justify-center">

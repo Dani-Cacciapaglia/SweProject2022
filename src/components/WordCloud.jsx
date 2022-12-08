@@ -8,6 +8,9 @@ export const WordCloud = () => {
 
   const spec = {
     $schema: 'https://vega.github.io/schema/vega/v5.json',
+    width: 768,
+    height: 300,
+    autosize: { type: 'fit', resize: true, contains: 'padding' },
     data: [
       {
         name: 'table',
@@ -71,6 +74,7 @@ export const WordCloud = () => {
             rotate: { field: 'datum.angle' },
             fontSize: { field: 'datum.count' },
             fontSizeRange: [10, 60],
+            size: [{ signal: 'width' }, { signal: 'height' }],
           },
         ],
       },
@@ -84,7 +88,7 @@ export const WordCloud = () => {
   };
   return (
     <>
-      <Vega spec={spec} data={wordData} />
+      <Vega spec={spec} data={wordData} actions={false} />
     </>
   );
 };

@@ -71,7 +71,7 @@ const App = () => {
             Fantacitorio
           </Tab>
         </Tab.List>
-        <Tab.Panels>
+        <Tab.Panels className="w-full">
           <Tab.Panel>
             <SearchContext.Provider
               value={{
