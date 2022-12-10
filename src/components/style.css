@@ -1,0 +1,34 @@
+.tableStyle {
+  background-color: #eeeeee;
+  width: 75%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.tableStyle td,
+.tableStyle th {
+  border: 1px solid #ffffff;
+  padding: 4px 4px;
+}
+.tableStyle tbody td {
+  font-size: 13px;
+}
+.tableStyle tr:nth-child(even) {
+  background: #d0e4f5;
+}
+.tableStyle thead {
+  background: #2286c8;
+}
+.tableStyle thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ffffff;
+  border-left: 2px solid #d0e4f5;
+}
+.tableStyle thead th:first-child {
+  border-left: none;
+}
+
+.numberRow {
+  text-align: center;
+  width: 100px;
+}

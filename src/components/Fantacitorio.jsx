@@ -2,6 +2,7 @@ import React from 'react';
 import { Tab } from '@headlessui/react';
 import { FantacitorioTeams } from './FantacitorioTeams';
 import { FantacitorioSearch } from './FantacitorioSearch';
+import { TabPunteggi } from './FantacitorioPunteggi';
 
 const Fantacitorio = () => {
   return (
@@ -37,7 +38,7 @@ const Fantacitorio = () => {
           <FantacitorioTeams />
         </Tab.Panel>
         <Tab.Panel>
-          <p>Classifica</p>
+          <TabPunteggi />
         </Tab.Panel>
         <Tab.Panel>
           <FantacitorioSearch />
