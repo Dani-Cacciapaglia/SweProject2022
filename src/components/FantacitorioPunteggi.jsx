@@ -38,6 +38,8 @@ const Settimanale = () => {
   const [data, setData] = useState(null);
   const [scores, setScores] = useState([]);
   const [index, setIndex] = useState(0);
+  const [endOfRecord, setEndOfRecord] = useState(false);
+
   const columns = ['Politico', 'Punteggio'];
 
   useEffect(() => {
@@ -66,12 +68,12 @@ const Settimanale = () => {
   }, [index, data]);
 
   return (
-    <div className="flex flex-col gap-2 mt-2">
-      <button className="">
+    <div className="scoreBoard">
+      <button className="btn" disabled={endOfRecord}>
         <ArrowLeft />
       </button>
       <WeeklyTable columns={columns} data={scores} />
-      <button>
+      <button className="btn" disabled={index === 0}>
         <ArrowRight />
       </button>
     </div>
