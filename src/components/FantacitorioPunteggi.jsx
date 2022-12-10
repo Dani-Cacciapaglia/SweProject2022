@@ -52,9 +52,7 @@ const Settimanale = () => {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      if (index >= data.length) {
-        setEndOfRecord(true);
-      }
+      setEndOfRecord(index >= data.length - 1);
       const weekScores = data[index];
       const keys = Object.keys(weekScores);
       const formattedData = [];
