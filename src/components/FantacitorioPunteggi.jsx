@@ -52,6 +52,9 @@ const Settimanale = () => {
 
   useEffect(() => {
     if (data && data.length > 0) {
+      if (index >= data.length) {
+        setEndOfRecord(true);
+      }
       const weekScores = data[index];
       const keys = Object.keys(weekScores);
       const formattedData = [];
@@ -69,11 +72,19 @@ const Settimanale = () => {
 
   return (
     <div className="scoreBoard">
-      <button className="btn" disabled={endOfRecord}>
+      <button
+        className="btn"
+        disabled={endOfRecord}
+        onClick={() => setIndex(index + 1)}
+      >
         <ArrowLeft />
       </button>
       <WeeklyTable columns={columns} data={scores} />
-      <button className="btn" disabled={index === 0}>
+      <button
+        className="btn"
+        disabled={index <= 0}
+        onClick={() => setIndex(index - 1)}
+      >
         <ArrowRight />
       </button>
     </div>
