@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Chessboard } from 'react-chessboard';
 import { TwitterShareButton, TwitterIcon } from 'react-share';
 
@@ -11,6 +11,11 @@ const TwitterChessboard = () => {
     turn: '',
     fen: '',
   });
+
+  useEffect(() => {
+    if (localStorage.gameStatus)
+      setGameStatus(JSON.parse(localStorage.gameStatus));
+  }, []);
 
   function createGame() {
     fetch(`${window.$apiUrl}/chess/games/`, {
@@ -26,6 +31,7 @@ const TwitterChessboard = () => {
       })
       .then((res) => {
         setGameStatus(res);
+        localStorage.gameStatus = JSON.stringify(res);
       })
       .catch((err) => {
         console.error(err);
@@ -77,6 +83,7 @@ const TwitterChessboard = () => {
     if (!response.ok) return false;
     const gs = await response.json();
     setGameStatus(gs);
+    localStorage.gameStatus = JSON.stringify(gs);
 
     return gs.lastMoveLegal;
   }
