@@ -6,7 +6,8 @@ import { ArrowLeft, ArrowRight } from 'react-feather';
 
 import './style.css';
 
-const WeeklyTable = ({ data, columns }) => {
+const ScoresTable = ({ data }) => {
+  const columns = ['Politico', 'Punteggio'];
   const sorted = data.sort((prev, next) => next.score - prev.score);
 
   return (
@@ -39,8 +40,6 @@ const Settimanale = () => {
   const [scores, setScores] = useState([]);
   const [index, setIndex] = useState(0);
   const [endOfRecord, setEndOfRecord] = useState(false);
-
-  const columns = ['Politico', 'Punteggio'];
 
   useEffect(() => {
     const loadData = async () => {
@@ -77,7 +76,7 @@ const Settimanale = () => {
       >
         <ArrowLeft />
       </button>
-      <WeeklyTable columns={columns} data={scores} />
+      <ScoresTable data={scores} />
       <button
         className="btn"
         disabled={index <= 0}
@@ -90,7 +89,50 @@ const Settimanale = () => {
 };
 
 const Globale = () => {
-  return <div>Globali</div>;
+  const [data, setData] = useState(null);
+  const [scores, setScores] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await axios.get(`${window.$apiUrl}/fantacitorio/scores`);
+      setData(res.data);
+    };
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const totalScores = {};
+
+      data.forEach((week) => {
+        for (let [key, value] of Object.entries(week)) {
+          if (totalScores[key]) {
+            totalScores[key] += value;
+          } else {
+            totalScores[key] = value;
+          }
+        }
+      });
+
+      const keys = Object.keys(totalScores);
+      const globalRanking = [];
+
+      keys.forEach((key) => {
+        globalRanking.push({
+          name: key,
+          score: totalScores[key],
+        });
+      });
+
+      setScores(globalRanking);
+    }
+  }, [data]);
+
+  return (
+    <div className="scoreBoard">
+      <ScoresTable data={scores} />
+    </div>
+  );
 };
 
 export const TabPunteggi = () => {
