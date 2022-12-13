@@ -44,7 +44,7 @@ const Settimanale = () => {
   useEffect(() => {
     const loadData = async () => {
       const res = await axios.get(`${window.$apiUrl}/fantacitorio/scores`);
-      setData(res.data);
+      setData(res.data.reverse());
     };
     loadData();
   }, []);
@@ -53,8 +53,7 @@ const Settimanale = () => {
     if (data && data.length > 0) {
       setEndOfRecord(index >= data.length - 1);
 
-      const revertData = data.reverse();
-      const weekScores = revertData[index];
+      const weekScores = data[index];
       const keys = Object.keys(weekScores);
       const formattedData = [];
 
