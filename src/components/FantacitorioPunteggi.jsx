@@ -35,19 +35,10 @@ const ScoresTable = ({ data }) => {
   );
 };
 
-const Settimanale = () => {
-  const [data, setData] = useState(null);
+const Settimanale = ({ data }) => {
   const [scores, setScores] = useState([]);
   const [index, setIndex] = useState(0);
   const [endOfRecord, setEndOfRecord] = useState(false);
-
-  useEffect(() => {
-    const loadData = async () => {
-      const res = await axios.get(`${window.$apiUrl}/fantacitorio/scores`);
-      setData(res.data.reverse());
-    };
-    loadData();
-  }, []);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -89,17 +80,8 @@ const Settimanale = () => {
   );
 };
 
-const Globale = () => {
-  const [data, setData] = useState(null);
+const Globale = ({ data }) => {
   const [scores, setScores] = useState([]);
-
-  useEffect(() => {
-    const loadData = async () => {
-      const res = await axios.get(`${window.$apiUrl}/fantacitorio/scores`);
-      setData(res.data);
-    };
-    loadData();
-  }, []);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -137,6 +119,16 @@ const Globale = () => {
 };
 
 export const TabPunteggi = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await axios.get(`${window.$apiUrl}/fantacitorio/scores`);
+      setData(res.data.reverse());
+    };
+    loadData();
+  }, []);
+
   return (
     <Tab.Group>
       <Tab.List className="flex flex-row justify-around w-full">
@@ -159,10 +151,10 @@ export const TabPunteggi = () => {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
-          <Settimanale />
+          <Settimanale data={data} />
         </Tab.Panel>
         <Tab.Panel>
-          <Globale />
+          <Globale data={data} />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
