@@ -13,7 +13,9 @@ const Search = ({
     useContext(SearchContext);
 
   const today = new Date();
+  today.setMinutes(today.getMinutes() - today.getTimezoneOffset() - 1);
   const lastWeek = new Date();
+  lastWeek.setMinutes(lastWeek.getMinutes() - lastWeek.getTimezoneOffset() + 1);
   lastWeek.setDate(lastWeek.getDate() - 7);
 
   const handleChange = (e) => {
@@ -52,7 +54,7 @@ const Search = ({
       </div>
       {showSettings && (
         <div className="flex flex-row flex-wrap justify-between max-w-prose mx-auto gap-2 mx-auto mb-2">
-          <div class="flex flex-row md:flex-col items-center">
+          <div className="flex flex-row md:flex-col items-center">
             <label htmlFor="startTime">Data di inizio:</label>
             <input
               id="startTime"
@@ -61,10 +63,16 @@ const Search = ({
               max={today.toISOString().slice(0, -8)}
               min={lastWeek.toISOString().slice(0, -8)}
               defaultValue={lastWeek.toISOString().slice(0, -8)}
-              onChange={(e) => setStartTime(new Date(e.target.value))}
+              onChange={(e) =>
+                setStartTime(
+                  new Date(
+                    e.target.checkValidity() ? e.target.value : e.target.min
+                  )
+                )
+              }
             />
           </div>
-          <div class="flex flex-row md:flex-col items-center">
+          <div className="flex flex-row md:flex-col items-center">
             <label htmlFor="endTime">Data di fine:</label>
             <input
               id="endTime"
@@ -73,10 +81,16 @@ const Search = ({
               max={today.toISOString().slice(0, -8)}
               min={lastWeek.toISOString().slice(0, -8)}
               defaultValue={today.toISOString().slice(0, -8)}
-              onChange={(e) => setEndTime(new Date(e.target.value))}
+              onChange={(e) =>
+                setEndTime(
+                  new Date(
+                    e.target.checkValidity() ? e.target.value : e.target.max
+                  )
+                )
+              }
             />
           </div>
-          <div class="flex flex-row md:flex-col items-center">
+          <div className="flex flex-row md:flex-col items-center">
             <label htmlFor="maxResults">Numero di risultati:</label>
             <input
               id="maxResults"
