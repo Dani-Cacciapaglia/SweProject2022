@@ -107,7 +107,7 @@ const Globale = ({ data }) => {
         });
       });
 
-      setScores(globalRanking); 
+      setScores(globalRanking);
     }
   }, [data]);
 
@@ -118,42 +118,92 @@ const Globale = ({ data }) => {
   );
 };
 
-const Statistiche=({data})=>{
- 
+const Statistiche = ({ data }) => {
+  const [allWeeks, setAllWeeks] = useState([]);
+  const [statsPerWeek, setStatsPerWeek] = useState();
+
   useEffect(() => {
     if (data && data.length > 0) {
-      const concorrenti=[]
-      const formattedData = data.map((week)=>{
+      const concorrenti = [];
+      const forStatsPerWeek = {};
+
+      const formattedData = data.map((week) => {
         const keys = Object.keys(week);
-        concorrenti.push(...keys)
-        const formattedWeek=[]
+        concorrenti.push(...keys);
+        const formattedWeek = [];
         keys.forEach((key) => {
           formattedWeek.push({
             name: key,
             score: week[key],
           });
         });
-        return formattedWeek
-      })
-      const deltas=[]
-      concorrenti.forEach((concorrente)=>{
-        let maxDelta
-        data.reduce((acc,week,index)=>{
-          if(index===0)acc=week[concorrente]||0
-          else {
-            acc=week[concorrente]-acc
-            if(acc>maxDelta) maxDelta=acc;
+        return formattedWeek;
+      });
+
+      const deltas = [];
+
+      concorrenti.forEach((concorrente) => {
+        let delta = -10000;
+        let acc;
+        data.forEach((week, index) => {
+          if (index === 0) {
+            acc = week[concorrente] || 0;
+          } else {
+            acc = (week[concorrente] || 0) - acc;
           }
-        })
-        deltas.push({name:concorrente,delta:maxDelta
-        })
-      })
-      console.log(deltas)
+          if (acc > delta) delta = acc;
+
+          deltas.push({ name: concorrente, delta: delta, week: index });
+        });
+      });
+
+      deltas.forEach((entry) => {
+        if (forStatsPerWeek[entry.week]) {
+          if (entry.delta > forStatsPerWeek[entry.week].delta) {
+            forStatsPerWeek[entry.week] = {
+              deltaName: entry.name,
+              delta: entry.delta,
+            };
+          }
+        } else {
+          forStatsPerWeek[entry.week] = {
+            deltaName: entry.name,
+            delta: entry.delta,
+          };
+        }
+      });
+
+      setAllWeeks(Object.keys(forStatsPerWeek));
+      setStatsPerWeek(forStatsPerWeek);
     }
   }, [data]);
 
-return <div>kijwbefhvleijkrufbgloqwiu</div>
-}
+  return (
+    <div className="scoreBoard">
+      <table className="tableStyle">
+        <thead>
+          <tr>
+            <th>Settimana</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allWeeks.map((week, index) => {
+            console.log(week);
+            return (
+              <tr key={index}>
+                <td className="numberRow">Settimana {index + 1}</td>
+                <td>
+                  {statsPerWeek[week].deltaName} - {statsPerWeek[week].delta}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export const TabPunteggi = () => {
   const [data, setData] = useState(null);
@@ -191,7 +241,7 @@ export const TabPunteggi = () => {
             'border-b-2 disabled:text-neutral-700 enabled:hover:font-bold'
           }
         >
-          Statistiche 
+          Statistiche
         </Tab>
       </Tab.List>
       <Tab.Panels>
@@ -202,7 +252,7 @@ export const TabPunteggi = () => {
           <Globale data={data} />
         </Tab.Panel>
         <Tab.Panel>
-          <Statistiche data={data}/>
+          <Statistiche data={data} />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
