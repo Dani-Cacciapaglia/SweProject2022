@@ -107,7 +107,7 @@ const Globale = ({ data }) => {
         });
       });
 
-      setScores(globalRanking);
+      setScores(globalRanking); 
     }
   }, [data]);
 
@@ -117,6 +117,43 @@ const Globale = ({ data }) => {
     </div>
   );
 };
+
+const Statistiche=({data})=>{
+ 
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const concorrenti=[]
+      const formattedData = data.map((week)=>{
+        const keys = Object.keys(week);
+        concorrenti.push(...keys)
+        const formattedWeek=[]
+        keys.forEach((key) => {
+          formattedWeek.push({
+            name: key,
+            score: week[key],
+          });
+        });
+        return formattedWeek
+      })
+      const deltas=[]
+      concorrenti.forEach((concorrente)=>{
+        let maxDelta
+        data.reduce((acc,week,index)=>{
+          if(index===0)acc=week[concorrente]||0
+          else {
+            acc=week[concorrente]-acc
+            if(acc>maxDelta) maxDelta=acc;
+          }
+        })
+        deltas.push({name:concorrente,delta:maxDelta
+        })
+      })
+      console.log(deltas)
+    }
+  }, [data]);
+
+return <div>kijwbefhvleijkrufbgloqwiu</div>
+}
 
 export const TabPunteggi = () => {
   const [data, setData] = useState(null);
@@ -148,6 +185,14 @@ export const TabPunteggi = () => {
         >
           Globali
         </Tab>
+        <Tab
+          className={({ selected }) =>
+            (selected ? 'font-bold border-b-4 border-sky-300 ' : '') +
+            'border-b-2 disabled:text-neutral-700 enabled:hover:font-bold'
+          }
+        >
+          Statistiche 
+        </Tab>
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
@@ -155,6 +200,9 @@ export const TabPunteggi = () => {
         </Tab.Panel>
         <Tab.Panel>
           <Globale data={data} />
+        </Tab.Panel>
+        <Tab.Panel>
+          <Statistiche data={data}/>
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
