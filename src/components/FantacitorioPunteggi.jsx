@@ -141,11 +141,12 @@ const Statistiche = ({ data }) => {
       });
 
       const deltas = [];
-
       concorrenti.forEach((concorrente) => {
         let delta = -10000;
         let acc;
+
         data.forEach((week, index) => {
+
           if (index === 0) {
             acc = week[concorrente] || 0;
           } else {
@@ -154,9 +155,10 @@ const Statistiche = ({ data }) => {
           if (acc > delta) delta = acc;
 
           deltas.push({ name: concorrente, delta: delta, week: index });
+          delta=0
         });
       });
-
+console.log(deltas)
       deltas.forEach((entry) => {
         if (forStatsPerWeek[entry.week]) {
           if (entry.delta > forStatsPerWeek[entry.week].delta) {
