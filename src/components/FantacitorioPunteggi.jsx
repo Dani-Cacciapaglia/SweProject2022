@@ -119,113 +119,135 @@ const Globale = ({ data }) => {
 };
 
 const Statistiche = ({ data }) => {
-  const [allWeeks, setAllWeeks] = useState([]);
-  const [statsPerWeek, setStatsPerWeek] = useState();
+  const [deltas, setDeltas] = useState([]);
+  const [attendancesStats, setAttendancesStats] = useState([]);
+  const [averageStats, setAverageStats] = useState([]);
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const concorrenti = [];
-      const forStatsPerWeek = {};
-      const forStatsPerWeekM = {};
-
-      const formattedData = data.map((week) => {
-        const keys = Object.keys(week);
-        concorrenti.push(...keys);
-        const formattedWeek = [];
-        keys.forEach((key) => {
-          formattedWeek.push({
-            name: key,
-            score: week[key],
-          });
-        });
-        return formattedWeek;
-      });
-
-      const deltas = [];
-      const medie = [];
-      concorrenti.forEach((concorrente) => {
-        let delta = -10000;
-        let acc;
-        let media;  
-        let presenze;
-
-        data.forEach((week, index) => {
-
-          if (index === 0) {
-            acc = week[concorrente] || 0;
-            media = week[concorrente] || 0;
-            presenze = presenze +1;
-          } else {
-            acc = (week[concorrente] || 0) - acc;
-            media = media + week[concorrente];
+      let deltas = [];
+      let attendancesStats = {};
+      let politicianScores = {};
+      let averageStats = {};
+      let lastScore = {};
+      let chronologicalData = data;
+      chronologicalData.reverse();
+      chronologicalData.forEach((week, weekNumber) => {
+        deltas[weekNumber] = {};
+        Object.keys(week).forEach((politician) => {
+          const delta = week[politician] - (lastScore[politician] || 0);
+          if (delta > (deltas[weekNumber].delta || 0)) {
+            deltas[weekNumber].politician = politician;
+            deltas[weekNumber].delta = delta;
           }
-          if (acc > delta) delta = acc;
-          media=media+acc;
-          presenze=presenze+1;
-          medie.push({name: concorrente, media : media/presenze, week: index });
-          deltas.push({ name: concorrente, delta: delta, week: index });
-          delta=0
+          lastScore[politician] = week[politician];
+          attendancesStats[politician] =
+            (attendancesStats[politician] || 0) + 1;
+          politicianScores[politician] =
+            (politicianScores[politician] || 0) + week[politician];
         });
       });
-      deltas.forEach((entry) => {
-        if (forStatsPerWeek[entry.week]) {
-          if (entry.delta > forStatsPerWeek[entry.week].delta) {
-            forStatsPerWeek[entry.week] = {
-              deltaName: entry.name,
-              delta: entry.delta,
-            };
-          }
-        } else {
-          forStatsPerWeek[entry.week] = {
-            deltaName: entry.name,
-            delta: entry.delta,
-          };
-        }
+      Object.keys(politicianScores).forEach((politician) => {
+        averageStats[politician] =
+          politicianScores[politician] / attendancesStats[politician];
       });
-
-      medie.forEach((entryM) => {
-        if (forStatsPerWeekM[entryM.week]) {
-            forStatsPerWeekM[entryM.week] = {
-              mediaName: entryM.name,
-              media: entryM.media,
-            };
-          
-        } 
+      setDeltas(deltas);
+      let attendancesStatsArray = [];
+      Object.keys(attendancesStats).forEach((politician) => {
+        attendancesStatsArray.push({
+          politician: politician,
+          attendances: attendancesStats[politician],
+        });
       });
-
-      setAllWeeks(Object.keys(forStatsPerWeek));
-      setStatsPerWeek(forStatsPerWeek);
+      let averageStatsArray = [];
+      Object.keys(averageStats).forEach((politician) => {
+        averageStatsArray.push({
+          politician: politician,
+          average: averageStats[politician],
+        });
+      });
+      setAttendancesStats(attendancesStatsArray);
+      setAverageStats(averageStatsArray);
     }
   }, [data]);
 
   return (
-    <div className="scoreBoard">
-      <table className="tableStyle">
-        <thead>
-          <tr>
-            <th>Settimana</th>
-            <th>Delta</th>
-            <th>Media</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allWeeks.map((week, index) => {
-            console.log(week);
-            return (
-              <tr key={index}>
-                <td className="numberRow">Settimana {index + 1}</td>
-                <td>
-                  {statsPerWeek[week].deltaName} - {statsPerWeek[week].delta}
-                </td>
-                <td>
-                  {statsPerWeek[week].mediaName} - {statsPerWeek[week].media}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="scoreBoard">
+        <table className="tableStyle">
+          <thead>
+            <tr>
+              <th>Settimana</th>
+              <th>Politico</th>
+              <th>Delta</th>
+            </tr>
+          </thead>
+          <tbody>
+            {deltas.map((delta, index) => {
+              return (
+                <tr key={index}>
+                  <td className="numberRow">{index + 1}</td>
+                  <td>{delta.politician}</td>
+                  <td>{delta.delta}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="scoreBoard">
+        <table className="tableStyle">
+          <thead>
+            <tr>
+              <th>Posizione</th>
+              <th>Politico</th>
+              <th>Presenze</th>
+            </tr>
+          </thead>
+          <tbody>
+            {attendancesStats
+              .sort((a, b) => a.attendances < b.attendances)
+              .map((attendancesStat, index) => {
+                return (
+                  index < 10 && (
+                    <tr key={index}>
+                      <td className="numberRow">{index + 1}</td>
+                      <td>{attendancesStat.politician}</td>
+                      <td>{attendancesStat.attendances}</td>
+                    </tr>
+                  )
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+      <div className="scoreBoard">
+        <table className="tableStyle">
+          <thead>
+            <tr>
+              <th>Posizione</th>
+              <th>Politico</th>
+              <th>Media</th>
+            </tr>
+          </thead>
+          <tbody>
+            {averageStats
+              .sort((a, b) => a.average < b.average)
+              .map((averageStat, index) => {
+                return (
+                  index < 10 && (
+                    <tr key={index}>
+                      <td className="numberRow">{index + 1}</td>
+                      <td>{averageStat.politician}</td>
+                      <td>{averageStat.average}</td>
+                    </tr>
+                  )
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
