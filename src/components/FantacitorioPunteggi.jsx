@@ -126,6 +126,7 @@ const Statistiche = ({ data }) => {
     if (data && data.length > 0) {
       const concorrenti = [];
       const forStatsPerWeek = {};
+      const forStatsPerWeekM = {};
 
       const formattedData = data.map((week) => {
         const keys = Object.keys(week);
@@ -141,24 +142,31 @@ const Statistiche = ({ data }) => {
       });
 
       const deltas = [];
+      const medie = [];
       concorrenti.forEach((concorrente) => {
         let delta = -10000;
         let acc;
+        let media;  
+        let presenze;
 
         data.forEach((week, index) => {
 
           if (index === 0) {
             acc = week[concorrente] || 0;
+            media = week[concorrente] || 0;
+            presenze = presenze +1;
           } else {
             acc = (week[concorrente] || 0) - acc;
+            media = media + week[concorrente];
           }
           if (acc > delta) delta = acc;
-
+          media=media+acc;
+          presenze=presenze+1;
+          medie.push({name: concorrente, media : media/presenze, week: index });
           deltas.push({ name: concorrente, delta: delta, week: index });
           delta=0
         });
       });
-console.log(deltas)
       deltas.forEach((entry) => {
         if (forStatsPerWeek[entry.week]) {
           if (entry.delta > forStatsPerWeek[entry.week].delta) {
@@ -175,6 +183,16 @@ console.log(deltas)
         }
       });
 
+      medie.forEach((entryM) => {
+        if (forStatsPerWeekM[entryM.week]) {
+            forStatsPerWeekM[entryM.week] = {
+              mediaName: entryM.name,
+              media: entryM.media,
+            };
+          
+        } 
+      });
+
       setAllWeeks(Object.keys(forStatsPerWeek));
       setStatsPerWeek(forStatsPerWeek);
     }
@@ -187,6 +205,7 @@ console.log(deltas)
           <tr>
             <th>Settimana</th>
             <th>Delta</th>
+            <th>Media</th>
           </tr>
         </thead>
         <tbody>
@@ -197,6 +216,9 @@ console.log(deltas)
                 <td className="numberRow">Settimana {index + 1}</td>
                 <td>
                   {statsPerWeek[week].deltaName} - {statsPerWeek[week].delta}
+                </td>
+                <td>
+                  {statsPerWeek[week].mediaName} - {statsPerWeek[week].media}
                 </td>
               </tr>
             );
