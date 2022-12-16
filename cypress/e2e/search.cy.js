@@ -2,7 +2,7 @@ describe('Check if search works', () => {
 	it('passes', () => {
 		cy.request('GET', '/api/search/twitter').then((response) => {
 			expect(response.status).to.eq(200);
-			expect(response.body).length.to.be.lessThan(11);
+			expect(response.body.length).to.be.lessThan(11);
 			expect(response.body[0]).to.have.property('id');
 			expect(response.body[0]).to.have.property('text');
 			expect(response.body[0]).to.have.property('created_at');
@@ -14,7 +14,7 @@ describe('Check if search works', () => {
 			let next_token = response.body[response.body.length - 1].next_token;
 			cy.request('GET', '/api/search/twitter?next_token=' + next_token).then((response) => {
 				expect(response.status).to.eq(200);
-				expect(response.body).length.to.be.lessThan(11);
+				expect(response.body.length).to.be.lessThan(11);
 				expect(response.body[0]).to.have.property('id');
 				expect(response.body[0]).to.have.property('text');
 				expect(response.body[0]).to.have.property('created_at');
@@ -27,7 +27,7 @@ describe('Check if search works', () => {
 		});
 		cy.request('GET', '/api/search/twitter?max_results=100').then((response) => {
 			expect(response.status).to.eq(200);
-			expect(response.body).length.to.be.lessThan(101);
+			expect(response.body.length).to.be.lessThan(101);
 		});
 		cy.request('GET', '/api/search/from:random_places').then((response) => {
 			expect(response.status).to.eq(200);
@@ -48,6 +48,10 @@ describe('Check if search works', () => {
 			expect(response.status).to.eq(200);
 			expect(new Date(response.body[0].created_at)).to.be.at.least(yesterday_12);
 			expect(new Date(response.body[0].created_at)).to.be.lessThan(yesterday_13);
+		});
+		cy.request('GET', '/api/search/from:nopost').then((response) => {
+			expect(response.status).to.eq(200);
+			expect(response.body.length).to.be.equal(0);
 		});
 		cy.request({
 			method: 'GET',

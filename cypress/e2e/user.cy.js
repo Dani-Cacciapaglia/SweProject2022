@@ -2,7 +2,7 @@ describe('Check if user works', () => {
 	it('passes', () => {
 		cy.request('GET', '/api/user/twitter').then((response) => {
 			expect(response.status).to.eq(200);
-			expect(response.body).length.to.be.lessThan(11);
+			expect(response.body.length).to.be.lessThan(11);
 			expect(response.body[0]).to.have.property('id');
 			expect(response.body[0]).to.have.property('text');
 			expect(response.body[0]).to.have.property('created_at');
@@ -14,7 +14,7 @@ describe('Check if user works', () => {
 			let next_token = response.body[response.body.length - 1].next_token;
 			cy.request('GET', '/api/user/twitter?next_token=' + next_token).then((response) => {
 				expect(response.status).to.eq(200);
-				expect(response.body).length.to.be.lessThan(11);
+				expect(response.body.length).to.be.lessThan(11);
 				expect(response.body[0]).to.have.property('id');
 				expect(response.body[0]).to.have.property('text');
 				expect(response.body[0]).to.have.property('created_at');
@@ -27,7 +27,7 @@ describe('Check if user works', () => {
 		});
 		cy.request('GET', '/api/user/twitter?max_results=100').then((response) => {
 			expect(response.status).to.eq(200);
-			expect(response.body).length.to.be.lessThan(101);
+			expect(response.body.length).to.be.lessThan(101);
 		});
 		let yesterday_12 = new Date();
 		yesterday_12.setDate(yesterday_12.getDate() - 1);

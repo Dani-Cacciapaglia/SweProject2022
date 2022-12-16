@@ -1,7 +1,7 @@
 function formatTweets(tweetsData) {
 	let tweets = [];
 	if (tweetsData.meta.result_count == 0) {
-		return res.status(200).send(tweets);
+		return tweets;
 	}
 	let users = new Map();
 	tweetsData.includes.users.forEach((user) => {
