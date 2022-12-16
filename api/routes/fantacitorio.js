@@ -32,16 +32,12 @@ router.get('/scores', async (req, res) => {
 				for (const line of lines) {
 					const score = line.match(numberPattern);
 					if (score) {
-						const words = line.split(' ');
-						if (words) {
-							let politician;
-							for (const word of words) {
-								politician = politicians.find((politician) => (politician.toLowerCase() == word.toLowerCase()));
-								if (politician) {
-									scores[scores.length - 1][politician] = (scores[scores.length - 1][politician] ?? 0) + (parseInt(score[score.length - 1]) * (line.match(/malus/gi) ? -1 : 1));
-								}
+						line.split(' ').forEach((word) => {
+							const politician = politicians.find((politician) => (politician.toLowerCase() == word.toLowerCase()));
+							if (politician) {
+								scores[scores.length - 1][politician] = (scores[scores.length - 1][politician] ?? 0) + (parseInt(score[score.length - 1]) * (line.match(/malus/gi) ? -1 : 1));
 							}
-						}
+						});
 					}
 				}
 			}
