@@ -11,7 +11,6 @@ router.get('/scores', async (req, res) => {
 		const fantacitorioStart = new Date('2022-11-04T12:00:00.000Z');
 		const fantacitorioEnd = new Date('2022-11-05T12:00:00.000Z');
 		while (fantacitorioEnd < new Date()) {
-			scores.push({});
 			let tweets = [];
 			let next_token;
 			do {
@@ -23,8 +22,11 @@ router.get('/scores', async (req, res) => {
 					'tweet.fields': 'created_at',
 				});
 				next_token = tweetsData.meta.next_token;
-				for (const tweet of tweetsData.data) {
-					tweets.push({'text': tweet.text, 'created_at': tweet.created_at});
+				if (tweetsData.data) {
+					scores.push({});
+					for (const tweet of tweetsData.data) {
+						tweets.push({'text': tweet.text, 'created_at': tweet.created_at});
+					}
 				}
 			} while (next_token);
 			for (const tweet of tweets) {
